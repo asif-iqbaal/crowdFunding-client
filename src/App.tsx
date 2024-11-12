@@ -18,10 +18,9 @@ function App() {
       <Route path='/about' element={<About />} />
       <Route path='/start-project' element={<StartAProjectPage />} />
 
-      
         <Route path="/discover" >
-          <Route index element={<DiscoverPage />} />  {/* Default Discover page */}
-          <Route path="campaign/:_id" element={<ViewCampaignPage />} /> {/* Nested Campaign by ID */}
+          <Route index element={<DiscoverPage />} /> 
+          <Route path="campaign/:_id" element={<ViewCampaignPage />} />
         </Route>
     </Routes>
     <Toaster />
