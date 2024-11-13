@@ -4,7 +4,6 @@ import { Input } from "../../components/ui/input"
 import { Button } from "../../components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
-import { Progress } from "../../components/ui/progress"
 import { Badge } from "../../components/ui/badge"
 import { Search, Filter } from 'lucide-react'
 import { ICampaigns } from '../../constant'
@@ -73,7 +72,7 @@ export default function DiscoverPage() {
                 <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className='bg-white'>
                   {categories.map((category) => (
                     <SelectItem key={category} value={category}>
                       {category}

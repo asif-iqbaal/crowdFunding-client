@@ -15,7 +15,7 @@ import { Slider } from "../../components/ui/slider"
 import { Progress } from "../../components/ui/progress"
 import { ArrowRight, HelpCircle, DollarSign, Calendar, Target } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../components/ui/tooltip"
-// import { Toast } from "../../components/ui/toast"
+import { useToast } from "../../hooks/use-toast";
 import { projectSchema } from '../../validations';
 import { CreateCampaign } from '../../action/createCampaign'
 import { ICreateCampaign } from '../../constant'
@@ -36,7 +36,7 @@ export default function StartAProjectPage() {
   const [step, setStep] = useState(1)
   const totalSteps = 4
   // const [previewImage, setPreviewImage] = useState<string | null>(null)
-
+  const {toast} = useToast();
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
@@ -58,13 +58,9 @@ export default function StartAProjectPage() {
       formData.append("description", data.description);
       formData.append("fundingGoal", data.fundingGoal.toString());
       formData.append("duration", data.duration.toString());
-
       if (data.image) {
         formData.append("image", data.image);
       }
-
-      console.log("file data",data.image);
-
     const campaignData: ICreateCampaign = {
     title: formData.get("title") as string,
     category: formData.get("category") as string,
@@ -73,21 +69,22 @@ export default function StartAProjectPage() {
     duration: Number(formData.get("duration")),
     image: formData.get("image") as File
 };
-
-console.log("new Campaign",campaignData)
-
   const res = await CreateCampaign(campaignData);
-  console.log(res);
-
- 
-
-      
+  if(res){
+    toast({
+      title: "success",
+      description: "Campaign created successfuly"
+    });
+  }
     } catch (error: any) {
-      console.error("Submission error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to upload campaign",
+        variant: "destructive",
+      });
     }
   };
   
-
   const nextStep = () => {
         setStep(step + 1)
   }
@@ -360,12 +357,12 @@ console.log("new Campaign",campaignData)
             <CardFooter className="flex justify-between">
               {step > 1 && (
                 
-                <div  onClick={prevStep}>
+                <div  onClick={prevStep} className=' border p-2 bg-black text-white rounded-sm cursor-pointer'>
                   Previous
                 </div>
               )}
               {step < totalSteps ? (
-                <div onClick={nextStep} className="ml-auto">
+                <div onClick={nextStep} className="ml-auto border px-5 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-sm cursor-pointer">
                   Next <ArrowRight className="ml-2 h-4 w-4" />
                 </div>
               ) : (

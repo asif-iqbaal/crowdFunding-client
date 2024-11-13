@@ -50,7 +50,7 @@ export default function About() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <img 
-                src="/placeholder.svg?height=400&width=600" 
+                src="/fundAbout.jpg" 
                 alt="CrowdFund Team" 
                 width={600} 
                 height={400} 
@@ -81,7 +81,7 @@ export default function About() {
               </motion.div>
               <motion.div variants={fadeInUp}>
                 <img
-                  src="/placeholder.svg?height=300&width=500" 
+                  src="/fund.svg" 
                   alt="CrowdFund Journey" 
                   width={500} 
                   height={300} 
@@ -123,7 +123,7 @@ export default function About() {
           </div>
         </section>
 
-        <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
+        {/* <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
           <div className="container mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">Meet Our Team</h2>
             <motion.div 
@@ -161,7 +161,7 @@ export default function About() {
               ))}
             </motion.div>
           </div>
-        </section>
+        </section> */}
 
         <section className="py-16 px-4 bg-gradient-to-r from-purple-600 to-blue-500 text-white">
           <div className="container mx-auto text-center">

@@ -62,7 +62,7 @@ export default function Navigation() {
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56" align="end" forceMount>
+                                <DropdownMenuContent className="w-56 bg-white" align="end" forceMount>
                                     <DropdownMenuItem asChild>
                                         <Link to="/profile">Profile</Link>
                                     </DropdownMenuItem>

@@ -64,10 +64,10 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-blue-500 text-white">
-                Start a Project <ArrowRight className="ml-2 h-4 w-4" />
+               <Link to="/start-project">Start a Project</Link>  <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                Explore Projects <Search className="ml-2 h-4 w-4" />
+               <Link to='/discover'>Explore Projects</Link>  <Search className="ml-2 h-4 w-4" />
               </Button>
             </motion.div>
           </div>
@@ -185,7 +185,7 @@ export default function Home() {
             <h2 className="text-4xl font-bold mb-6">Ready to Bring Your Idea to Life?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">Join our community of innovators and make your dream project a reality. Start your journey today!</p>
             <Button size="lg" variant="secondary" className="bg-white text-purple-600 hover:bg-gray-100">
-              Launch Your Project <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to='/start-project'>Launch Your Project</Link> <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </section>
