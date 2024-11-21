@@ -105,7 +105,7 @@ export default function DiscoverPage() {
                           <div className="bg-gradient-to-r from-purple-600 to-blue-500 h-2.5 rounded-full" style={{ width: `${(campaign.currentFunding / campaign.fundingGoal) * 100}%` }}></div>
                         </div>
                       <div className="flex justify-between text-sm text-gray-500">
-                        <span>${campaign.currentFunding} raised</span>
+                        <span>₹{campaign.currentFunding} raised</span>
                         <span>{Math.round((campaign.currentFunding / campaign.fundingGoal) * 100)}%</span>
                       </div>
                     </CardContent>

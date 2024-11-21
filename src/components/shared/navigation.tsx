@@ -34,7 +34,7 @@ export default function Navigation() {
     }
 
     return (
-        <div>
+        <div className='z-auto'>
             <motion.header 
                 className="fixed w-full z-10"
                 initial="hidden"
@@ -82,10 +82,7 @@ export default function Navigation() {
                         </div>
                             </>
                         )}
-                    </div>
-
-
-                    
+                    </div>   
                     <button 
                         className="md:hidden" 
                         onClick={() => setIsMenuOpen(!isMenuOpen)}

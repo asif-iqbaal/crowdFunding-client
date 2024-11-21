@@ -26,7 +26,6 @@ export default function ViewCampaignPage() {
   useEffect(() => {
     const getCampaign = async () => {
       if (_id) {
-        console.log(_id);
         try {
           const campaigns= await CampaignById(_id);
           setCampaignData(campaigns);
@@ -38,7 +37,11 @@ export default function ViewCampaignPage() {
           });
         }
       } else {
-        console.log("Campaign ID is undefined");
+        toast({
+          title: "Error",
+          description: "Failed to fetch campaign details",
+          variant: "destructive",
+        });
       }
     };
     getCampaign();
@@ -47,12 +50,20 @@ export default function ViewCampaignPage() {
   const handleBacking = async () => {
     if (_id && amount) {
       try {
-         await BackProject({ amount, _id });
+        const back =  await BackProject({ amount, _id });
          setIsProjectBacked((prev) => !prev);
-        toast({
-          title: "Success",
-          description: "Thanks for backing this project!",
-        });
+         if(back){
+          toast({
+            title: "Success",
+            description: "Thanks for backing this project!",
+          });
+         }else{
+          toast({
+            title: "Error",
+            description: "Failed to process your backing.",
+            variant: "destructive",
+          });
+         }
         setIsBackingDialogOpen(false);
       } catch (error: any) {
         toast({
@@ -105,8 +116,8 @@ export default function ViewCampaignPage() {
                 <CardTitle>Funding Progress</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold mb-2">${campaignData?.currentFunding}</div>
-                <p className="text-gray-500 mb-2">raised of ${campaignData?.fundingGoal?.toLocaleString()} goal</p>
+                <div className="text-3xl font-bold mb-2">₹{campaignData?.currentFunding}</div>
+                <p className="text-gray-500 mb-2">raised of ₹{campaignData?.fundingGoal?.toLocaleString()} goal</p>
                 <Progress value={(campaignData?.currentFunding / campaignData?.fundingGoal) * 100} className="h-2 mb-4" />
                 <div className="grid grid-cols-2 gap-4 text-center">
                   {/* <div>

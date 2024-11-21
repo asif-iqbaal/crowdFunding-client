@@ -7,6 +7,7 @@ import DiscoverPage from "./pages/discover/discover"
 import ViewCampaignPage from "./pages/discover/campaignById"
 import ScrollToTop from "./components/shared/scrollToTop"
 import { Toaster } from "./components/ui/toaster"
+import ProfilePage from "./pages/profile/profile"
 function App() {
 
   return (
@@ -17,7 +18,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path='/about' element={<About />} />
       <Route path='/start-project' element={<StartAProjectPage />} />
-
+      <Route path='/profile' element={<ProfilePage />} />
+      
         <Route path="/discover" >
           <Route index element={<DiscoverPage />} /> 
           <Route path="campaign/:_id" element={<ViewCampaignPage />} />

@@ -4,10 +4,14 @@ import { Input } from "../../components/ui/input"
 import { Card, CardContent } from "../../components/ui/card"
 import { ArrowRight, Heart, Search, DollarSign, Users, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { All_Campaigns } from '../../action/allCampaigns'
+import { useEffect, useState } from 'react'
+import { ICampaigns } from '../../constant'
 
 
 
 export default function Home() {
+  const [campaigns,setCampaigns] = useState<ICampaigns[]>([]);
 //   const [isMenuOpen, setIsMenuOpen] = useState(false)
 //   const { scrollY } = useScroll()
 //   const backgroundColor = useTransform(
@@ -36,6 +40,19 @@ export default function Home() {
     }
   }
 
+  useEffect(()=>{
+    const getCamps = async () => {
+        try {
+            const campaign = await All_Campaigns();
+            setCampaigns(campaign);
+        } catch (error:any) {
+            console.log("error",error);
+        }
+    }
+    getCamps();
+},[])
+
+  const filterCampaign = campaigns.slice(-3);
   return (
     <div className="max-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
       <main>
@@ -82,23 +99,19 @@ export default function Home() {
           <div className="container mx-auto relative z-10">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">Featured Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                { title: "EcoTech Revolution", description: "Sustainable technology for a greener future", raised: 75000, goal: 100000, image: "/placeholder.svg?height=200&width=400" },
-                { title: "ArtScape VR", description: "Immersive virtual reality art experiences", raised: 45000, goal: 60000, image: "/placeholder.svg?height=200&width=400" },
-                { title: "FoodShare App", description: "Reducing food waste through community sharing", raised: 30000, goal: 50000, image: "/placeholder.svg?height=200&width=400" }
-              ].map((project, i) => (
-                <motion.div key={i} variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+              {filterCampaign.map((campaign) => (
+                <motion.div key={campaign._id} variants={fadeInUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
                   <Card className="overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <CardContent className="p-0">
-                      <img src={project.image} alt={project.title} width={400} height={200} className="w-full h-48 object-cover" />
+                      <img src={campaign.image} alt={campaign.title} width={400} height={200} className="w-full h-48 object-cover" />
                       <div className="p-6">
-                        <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                        <p className="text-gray-600 mb-4">{project.description}</p>
+                        <h3 className="text-xl font-semibold mb-2">{campaign.title}</h3>
+                        <p className="text-gray-600 mb-4">{campaign.description}</p>
                         <div className="mb-4 bg-gray-200 rounded-full h-2.5">
-                          <div className="bg-gradient-to-r from-purple-600 to-blue-500 h-2.5 rounded-full" style={{ width: `${(project.raised / project.goal) * 100}%` }}></div>
+                          <div className="bg-gradient-to-r from-purple-600 to-blue-500 h-2.5 rounded-full" style={{ width: `${(campaign.currentFunding / campaign.fundingGoal) * 100}%` }}></div>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-purple-600 font-semibold">${project.raised.toLocaleString()} raised</span>
+                          <span className="text-purple-600 font-semibold">₹{campaign.currentFunding} raised</span>
                           <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-500 text-white">
                             Support <Heart className="ml-2 h-4 w-4" />
                           </Button>
@@ -154,7 +167,7 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">What Our Community Says</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
-                { name: "Alex Johnson", role: "Project Creator", quote: "CrowdFund helped me turn my passion into a successful business. The support from the community was overwhelming!", avatar: "/placeholder.svg?height=100&width=100" },
+                { name: "Md Shami", role: "Project Creator", quote: "CrowdFund helped me turn my passion into a successful business. The support from the community was overwhelming!", avatar: "/placeholder.svg?height=100&width=100" },
                 { name: "Sarah Lee", role: "Backer", quote: "I love discovering and supporting innovative projects. CrowdFund makes it easy and exciting to be part of something new.", avatar: "/placeholder.svg?height=100&width=100" },
                 { name: "Mike Brown", role: "Entrepreneur", quote: "As a repeat creator, I can say that CrowdFund provides the best platform for bringing ideas to life. It's simply unmatched.", avatar: "/placeholder.svg?height=100&width=100" }
               ].map((testimonial, index) => (
@@ -168,7 +181,7 @@ export default function Home() {
                 >
                   <p className="text-gray-600 mb-4 italic">"{testimonial.quote}"</p>
                   <div className="flex  items-center">
-                    <img src={testimonial.avatar} alt={testimonial.name} width={48} height={48} className="rounded-full mr-4" />
+                   {/*<img src={testimonial.avatar} alt={testimonial.name} width={48} height={48} className="rounded-full mr-4" /> */}
                     <div>
                       <h4 className="font-semibold">{testimonial.name}</h4>
                       <p className="text-sm text-gray-500">{testimonial.role}</p>

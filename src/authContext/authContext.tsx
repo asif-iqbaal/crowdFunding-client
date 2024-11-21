@@ -9,6 +9,7 @@ interface AuthContextType {
     username:string,
     id:string;
   }
+  name:string;
 }
 
 // Create a default context with placeholders
@@ -22,6 +23,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user,setUser] =  useState<{ username: string; id: string }>({ username: '', id: '' });
+  const [name,setName] = useState("");
   useEffect(() => {  
       const getCookies = async () => {
         const token =  sessionStorage.getItem('token');
@@ -30,6 +32,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
           const payload = token.split('.')[1];
           const decodedPayload = JSON.parse(atob(payload));
           setUser(decodedPayload);
+          setName(decodedPayload.user.username);
         }
       }
     getCookies();
@@ -43,7 +46,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, name }}>
       {children}
     </AuthContext.Provider>
   );
