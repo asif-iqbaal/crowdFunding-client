@@ -49,3 +49,10 @@ export interface Signup {
     amount: number;
     _id: string;
   }
+
+  export interface IProfile{
+    _id:string;
+    username:string;
+    email:string;
+    mycampaign:[]
+  }

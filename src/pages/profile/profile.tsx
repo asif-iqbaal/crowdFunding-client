@@ -12,6 +12,8 @@ import { Separator } from "../../components/ui/separator"
 import { useToast } from "../../hooks/use-toast";
 import { useAuth } from '../../authContext/authContext'
 import { User, Settings, CreditCard, LogOut, Edit, Trash2 } from 'lucide-react'
+import { UserProfile } from '../../action/profile'
+import { IProfile } from '../../constant'
 
 // Mock data for the user profile
 const userData = {
@@ -31,11 +33,21 @@ const userData = {
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)
+  const [profileData,setProfileData] = useState<IProfile[]>([]);
   const [bio, setBio] = useState(userData.bio)
   const {toast} = useToast();
   const {name} = useAuth();
  
  
+  useEffect(()=>{
+    const fetchUser = async() => {
+    
+    const data=  await UserProfile();
+      setProfileData([data]);
+      console.log(profileData);
+    }
+    fetchUser();
+  },[])
   const handleSaveProfile = () => {
     // Here you would typically update the profile information in your backend
     setIsEditing(false)
@@ -77,7 +89,7 @@ export default function ProfilePage() {
                       className="text-2xl font-bold mb-1"
                     />
                   ) : (
-                    <h1 className="text-2xl font-bold mb-1">{name}</h1>
+                    <h1 className="text-2xl font-bold mb-1">{userData.name}</h1>
                   )}
                   <p className="text-gray-500">{userData.email}</p>
                 </div>
