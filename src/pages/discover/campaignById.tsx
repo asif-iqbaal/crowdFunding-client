@@ -170,7 +170,7 @@ export default function ViewCampaignPage() {
                       </div>
                     </div>
                     <DialogFooter>
-                      <Button onClick={handleBacking}>Confirm Backing</Button>
+                      {campaignData?.daysLeft<1?<p className='text-red-600'>can't back to this campaign</p>:<Button onClick={handleBacking}>Confirm Backing</Button>}
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
