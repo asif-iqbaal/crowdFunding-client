@@ -50,7 +50,6 @@ export default function StartAProjectPage() {
   })
 
   const onSubmit = async (data: ProjectFormValues) => {
-    console.log("submit is working");
     try {
       const formData = new FormData();
       formData.append("title", data.title);
@@ -75,7 +74,9 @@ export default function StartAProjectPage() {
       title: "success",
       description: "Campaign created successfuly"
     });
+    reset();
   }
+
     } catch (error: any) {
       toast({
         title: "Error",
@@ -272,7 +273,7 @@ export default function StartAProjectPage() {
                           name="fundingGoal"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Funding Goal ($)</FormLabel>
+                              <FormLabel>Funding Goal (₹)</FormLabel>
                               <FormControl>
                                 <div className="flex items-center space-x-2">
                                   <DollarSign className="text-gray-500" />
@@ -337,7 +338,7 @@ export default function StartAProjectPage() {
                             <p className="mt-1 text-sm text-gray-600">{form.getValues('description')}</p>
                           </div>
                           <div>
-                            <span className="font-medium">Funding Goal:</span> ${form.getValues('fundingGoal')}
+                            <span className="font-medium">Funding Goal:</span> ₹{form.getValues('fundingGoal')}
                           </div>
                           <div>
                             <span className="font-medium">Duration:</span> {form.getValues('duration')} days

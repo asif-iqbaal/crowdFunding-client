@@ -46,10 +46,10 @@ export const DeleteUser = async function(id:string){
     }
 }
 
-export const UpdatePassword = async function (password:string) {
+export const UpdatePassword = async function (newPassword:string) {
     try {
         const token = sessionStorage.getItem('token');
-        const res = await axiosClient.post('/updatepassword',{password},
+        const res = await axiosClient.post('/updatepassword',{newPassword},
             {
                 headers: {
                     Authorization: `Bearer ${token}`,

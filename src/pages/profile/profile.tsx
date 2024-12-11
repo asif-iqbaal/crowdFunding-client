@@ -14,11 +14,14 @@ import { Settings, CreditCard, LogOut,  Trash2 } from 'lucide-react'
 import { DeleteUser, UpdatePassword, UserCampaigns, UserProfile } from '../../action/profile'
 import { ICampaigns, IProfile } from '../../constant'
 import { useNavigate } from 'react-router-dom'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../components/ui/dialog'
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)
   const [profileData, setProfileData] = useState<IProfile>({} as IProfile);
+  const [openDialog,setOpenDialog] = useState(false);
   const [userCamps, setUserCamps] = useState<ICampaigns[]>([]);
+  const [newPassword,setNewPassword] = useState<string>("");
   const {toast} = useToast();
   const {logout} = useAuth();
  const navigate = useNavigate();
@@ -39,13 +42,22 @@ export default function ProfilePage() {
     fetchUser();
   },[]);
 
-  const handlePasswordChange = async(password:string) => {
-    await UpdatePassword(password);
+  const handlePasswordChange = async() => {
+   try {
+    await UpdatePassword(newPassword);
     setIsEditing(false)
     toast({
       title: "Password Updated",
       description: "Your password has been successfully updated.",
     })
+    setOpenDialog(false);
+   } catch (error:any) {
+    toast({
+      title: "Password Updated",
+      description: "Your password has been successfully updated.",
+      variant: "destructive",
+    })
+   }
   }
 
   const handleDeleteAccount = async(id:string) => {
@@ -68,7 +80,7 @@ export default function ProfilePage() {
   
     const handleLogout = () => {
       logout();
-
+      navigate('/')
   }
 
   return (
@@ -152,15 +164,35 @@ export default function ProfilePage() {
                   <div className="space-y-2">
                     <Label htmlFor="password">Password</Label>
                     <Input id="password" type="password" value="********" readOnly />
-                  </div>
+                  </div> 
+                  <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                  <DialogTrigger asChild>
                   <Button variant="outline" className="w-full">
                     <Settings className="mr-2 h-4 w-4" />
                     Change Password
                   </Button>
-                  <Button variant="outline" className="w-full">
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    Manage Payment Methods
-                  </Button>
+                  </DialogTrigger>
+                  <DialogContent className='bg-white'>
+                  <DialogHeader>
+                      <DialogTitle>Update your password</DialogTitle>
+                      <DialogDescription>
+                        change your password with including special character
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div>
+                      <Label htmlFor='newPassword'>Update password</Label>
+                      <Input
+                      id='newPassword'
+                      placeholder='enter new password'
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      />
+                    </div>
+                    <DialogFooter >
+                    <Button className='bg-black text-white hover:bg-gray-700' onClick={handlePasswordChange}>Confirm Change</Button>
+                  </DialogFooter>
+                  </DialogContent>       
+                </Dialog>
                   <Button variant="outline" className="w-full" onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     Log Out
@@ -172,6 +204,7 @@ export default function ProfilePage() {
                     Delete Account
                   </Button>
                 </CardContent>
+               
               </Card>
             </TabsContent>
           </Tabs>

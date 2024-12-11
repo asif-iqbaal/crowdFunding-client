@@ -162,7 +162,7 @@ export default function ViewCampaignPage() {
                         value={amount}
                         onChange={(e) => {
                           const value = Number(e.target.value);
-                          setAmount(isNaN(value) ? 0 : value); // Set amount to 0 if the input is invalid
+                          setAmount(isNaN(value) ? 0 : value);
                           setSelectedReward(null);
                         }}
                       />
