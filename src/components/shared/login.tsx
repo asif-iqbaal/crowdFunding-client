@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,11 +7,12 @@ import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form"
-import { Facebook, Github, Twitter } from 'lucide-react'
+import { FaGoogle } from 'react-icons/fa';
 import { loginSchema } from '../../validations'
-import { LoginUser } from '../../action/auth'
+import { authWithGoogle, LoginUser } from '../../action/auth'
 import { Login } from '../../constant'
 import { useAuth } from '../../authContext/authContext';
+import { toast } from '../../hooks/use-toast'
 
 type LoginFormValues = z.infer<typeof loginSchema>
 
@@ -25,6 +26,16 @@ export default function LoginDialog () {
       password: "",
     },
   })
+
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('token');
+    if (token) {
+        sessionStorage.setItem('token', token);
+        login();
+        setIsOpen(false);
+        window.history.replaceState({}, document.title, window.location.pathname); // Clean up the URL
+    }
+}, []);
 
   const onSubmit = async(data: LoginFormValues) => {
     try {
@@ -42,6 +53,22 @@ export default function LoginDialog () {
   } catch (error) {
       console.error("Login failed:", error);
   }
+  }
+
+  const handleAuthGoogle = async() => {
+    try {
+      const user:any = await authWithGoogle();
+      if(user){
+        login();
+        setIsOpen(false);
+      }
+    } catch (error:any) {
+      toast({
+        title: "Error",
+        description: "Failed to login",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
@@ -108,17 +135,9 @@ export default function LoginDialog () {
             </div>
           </div>
           <div className="mt-4 flex gap-2">
-            <Button variant="outline" className="w-full">
-              <Facebook className="mr-2 h-4 w-4" />
-              Facebook
-            </Button>
-            <Button variant="outline" className="w-full">
-              <Twitter className="mr-2 h-4 w-4" />
-              Twitter
-            </Button>
-            <Button variant="outline" className="w-full">
-              <Github className="mr-2 h-4 w-4" />
-              Github
+            <Button variant="outline" className="w-full" onClick={handleAuthGoogle}>
+             <FaGoogle />
+              Google
             </Button>
           </div>
         </div>

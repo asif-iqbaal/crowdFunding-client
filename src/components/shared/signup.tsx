@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,11 +7,12 @@ import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form"
-import { Facebook, Github, Twitter } from 'lucide-react'
+import { FaGoogle } from 'react-icons/fa';
 import { signupSchema } from '../../validations'
 import { Signup } from '../../constant'
-import { CreateUser } from '../../action/auth'
+import { authWithGoogle, CreateUser } from '../../action/auth'
 import { useAuth } from '../../authContext/authContext'
+import { toast } from '../../hooks/use-toast'
 
 type SignupFormValues = z.infer<typeof signupSchema>
 
@@ -28,6 +29,16 @@ export default function SignupDialog() {
     },
   })
 
+  useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('token');
+    if (token) {
+        sessionStorage.setItem('token', token);
+        login();
+        setIsOpen(false);
+        window.history.replaceState({}, document.title, window.location.pathname); // Clean up the URL
+    }
+}, []);
+
   const onSubmit = async(data: SignupFormValues) => {
     let user:Signup;
     user = await CreateUser({
@@ -42,6 +53,21 @@ export default function SignupDialog() {
     }
   }
 
+  const handleAuthGoogle = async() => {
+    try {
+      const user:any = await authWithGoogle();
+      if(user){
+        login();
+        setIsOpen(false);
+      }
+    } catch (error:any) {
+      toast({
+        title: "Error",
+        description: "Failed to login",
+        variant: "destructive",
+      });
+    }
+  }
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -129,17 +155,9 @@ export default function SignupDialog() {
             </div>
           </div>
           <div className="mt-4 flex gap-2">
-            <Button variant="outline" className="w-full">
-              <Facebook className="mr-2 h-4 w-4" />
-              Facebook
-            </Button>
-            <Button variant="outline" className="w-full">
-              <Twitter className="mr-2 h-4 w-4" />
-              Twitter
-            </Button>
-            <Button variant="outline" className="w-full">
-              <Github className="mr-2 h-4 w-4" />
-              Github
+            <Button variant="outline" className="w-full" onClick={handleAuthGoogle}>
+              <FaGoogle />
+                Google
             </Button>
           </div>
         </div>

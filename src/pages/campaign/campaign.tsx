@@ -74,7 +74,6 @@ export default function StartAProjectPage() {
       title: "success",
       description: "Campaign created successfuly"
     });
-    reset();
   }
 
     } catch (error: any) {
