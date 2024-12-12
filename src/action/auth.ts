@@ -32,6 +32,15 @@ export const authWithGoogle = async function() {
     }
 }
 
+export const authWithGithub = async function() {
+    try {
+        window.location.href = 'http://localhost:3000/auth/github'; 
+    } catch (error: any) {
+        console.error('Error initiating Google Auth:', error);
+        throw error;
+    }
+}
+
 export const LoginUser = async function ({
     email,
     password

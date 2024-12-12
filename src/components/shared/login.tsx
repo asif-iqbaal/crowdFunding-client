@@ -7,9 +7,9 @@ import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form"
-import { FaGoogle } from 'react-icons/fa';
+import { FaGoogle,FaGithub } from 'react-icons/fa';
 import { loginSchema } from '../../validations'
-import { authWithGoogle, LoginUser } from '../../action/auth'
+import { authWithGithub, authWithGoogle, LoginUser } from '../../action/auth'
 import { Login } from '../../constant'
 import { useAuth } from '../../authContext/authContext';
 import { toast } from '../../hooks/use-toast'
@@ -71,6 +71,21 @@ export default function LoginDialog () {
     }
   }
 
+  const handleAuthGithub = async() => {
+    try {
+      const user:any = await authWithGithub();
+      if(user){
+        login();
+        setIsOpen(false);
+      }
+    } catch (error:any) {
+      toast({
+        title: "Error",
+        description: "Failed to login",
+        variant: "destructive",
+      });
+    }
+  }
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -138,6 +153,10 @@ export default function LoginDialog () {
             <Button variant="outline" className="w-full" onClick={handleAuthGoogle}>
              <FaGoogle />
               Google
+            </Button>
+            <Button variant="outline" className="w-full" onClick={handleAuthGithub}>
+             <FaGithub />
+              Github
             </Button>
           </div>
         </div>

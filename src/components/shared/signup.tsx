@@ -7,10 +7,10 @@ import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form"
-import { FaGoogle } from 'react-icons/fa';
+import { FaGoogle,FaGithub } from 'react-icons/fa';
 import { signupSchema } from '../../validations'
 import { Signup } from '../../constant'
-import { authWithGoogle, CreateUser } from '../../action/auth'
+import { authWithGithub, authWithGoogle, CreateUser } from '../../action/auth'
 import { useAuth } from '../../authContext/authContext'
 import { toast } from '../../hooks/use-toast'
 
@@ -35,7 +35,7 @@ export default function SignupDialog() {
         sessionStorage.setItem('token', token);
         login();
         setIsOpen(false);
-        window.history.replaceState({}, document.title, window.location.pathname); // Clean up the URL
+        window.history.replaceState({}, document.title, window.location.pathname); 
     }
 }, []);
 
@@ -56,6 +56,22 @@ export default function SignupDialog() {
   const handleAuthGoogle = async() => {
     try {
       const user:any = await authWithGoogle();
+      if(user){
+        login();
+        setIsOpen(false);
+      }
+    } catch (error:any) {
+      toast({
+        title: "Error",
+        description: "Failed to login",
+        variant: "destructive",
+      });
+    }
+  }
+
+  const handleAuthGithub = async() => {
+    try {
+      const user:any = await authWithGithub();
       if(user){
         login();
         setIsOpen(false);
@@ -158,6 +174,10 @@ export default function SignupDialog() {
             <Button variant="outline" className="w-full" onClick={handleAuthGoogle}>
               <FaGoogle />
                 Google
+            </Button>
+            <Button variant="outline" className="w-full" onClick={handleAuthGithub}>
+              <FaGithub />
+                Github
             </Button>
           </div>
         </div>

@@ -34,9 +34,9 @@ export default function Navigation() {
     }
 
     return (
-        <div className='z-auto'>
+        <div className='z-auto bg-white'>
             <motion.header 
-                className="fixed w-full z-10"
+                className="fixed w-full z-20"
                 initial="hidden"
                 animate="visible"
                 variants={navVariants}
@@ -99,12 +99,40 @@ export default function Navigation() {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <div className="flex flex-col items-center py-4 space-y-4">
+                        <div className="flex flex-col items-end py-4 px-4 space-y-4 bg-white">
                             <Link to="/discover" className="text-gray-600 hover:text-purple-600 transition-colors">Discover</Link>
                             <Link to="/start-project" className="text-gray-600 hover:text-purple-600 transition-colors">Start a Project</Link>
                             <Link to="/about" className="text-gray-600 hover:text-purple-600 transition-colors">About Us</Link>
-                            <LoginDialog />
-                            <Button className="w-full max-w-xs bg-gradient-to-r from-purple-600 to-blue-500 text-white"><SignupDialog /></Button>
+                            {isAuthenticated ? (
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                                        <Avatar className="h-8 w-8">
+                                            {/* <AvatarImage src={} alt={user?.username} /> */}
+                                            <AvatarFallback>{user?.username?.charAt(0) || <User />}</AvatarFallback>
+                                        </Avatar>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-56 bg-white" align="end" forceMount>
+                                    <DropdownMenuItem asChild>
+                                        <Link to="/profile">Profile</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link to="/dashboard">Dashboard</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={handleLogout}>
+                                        Log out
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        ) : (
+                            <>
+                        <div className=" space-x-2">
+                        <LoginDialog />
+                        <Button className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"><SignupDialog /></Button>
+                        </div>
+                            </>
+                        )}
                         </div>
                     </motion.div>
                 )}
