@@ -123,7 +123,7 @@ const handleBacking = async () => {
         };
   
         const razorpay = new (window as any).Razorpay(options);
-        razorpay.on("payment.failed", (response: any) => {
+        razorpay.on("payment.failed", () => {
           toast({
             title: "Error",
             description: "Payment failed. Please try again.",
