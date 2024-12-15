@@ -29,6 +29,7 @@ export interface Signup {
     fundingGoal:number;
     duration:number;
     image:string;
+    daysLeft:number;
   }
 
   export interface ICampaignById{
@@ -43,6 +44,7 @@ export interface Signup {
     image:string;
     donators:[];
     createdAt:Date;
+    daysLeft:number;
   }
 
   export interface IBackProject {

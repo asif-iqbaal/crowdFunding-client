@@ -11,10 +11,7 @@ export const CreateCampaign = async function({
 }:ICreateCampaign){
     try {
         const token = sessionStorage.getItem('token');
-         
-
-        console.log("image in campaign", image)
-        
+                 
         const response = await axiosClient.post('/create',{
             title,
             category,

@@ -8,22 +8,8 @@ import { All_Campaigns } from '../../action/allCampaigns'
 import { useEffect, useState } from 'react'
 import { ICampaigns } from '../../constant'
 
-
-
 export default function Home() {
   const [campaigns,setCampaigns] = useState<ICampaigns[]>([]);
-//   const [isMenuOpen, setIsMenuOpen] = useState(false)
-//   const { scrollY } = useScroll()
-//   const backgroundColor = useTransform(
-//     scrollY,
-//     [0, 100],
-//     ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 1)"]
-//   )
-
-//   const navVariants = {
-//     hidden: { opacity: 0, y: -50 },
-//     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-//   }
  
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },

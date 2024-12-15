@@ -8,17 +8,16 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useToast } from "../../hooks/use-toast";
-import { Heart, Share2, Clock, DollarSign, Users } from 'lucide-react';
+import { Heart, Share2 } from 'lucide-react';
 import { CampaignById } from '../../action/getCampaignById';
 import { ICampaignById } from '../../constant';
 import { BackProject } from '../../action/donation.action';
+import { axiosClient } from '../../lib/utils';
 
 export default function ViewCampaignPage() {
-  const [activeTab, setActiveTab] = useState("story");
   const [isBackingDialogOpen, setIsBackingDialogOpen] = useState(false);
-  const [selectedReward, setSelectedReward] = useState<number | null>(null);
   const [amount, setAmount] = useState<number>(0);
-  const [campaignData, setCampaignData] = useState<ICampaignById []| null>(null);
+  const [campaignData, setCampaignData] = useState<ICampaignById | null>(null);
   const [isProjectBacked, setIsProjectBacked] = useState<boolean>(false); 
   const { _id } = useParams();
   const {toast} = useToast();
@@ -47,25 +46,97 @@ export default function ViewCampaignPage() {
     getCampaign();
   }, [_id,isProjectBacked]);
 
-  const handleBacking = async () => {
+const handleBacking = async () => {
     if (_id && amount) {
       try {
-        const back =  await BackProject({ amount, _id });
-         setIsProjectBacked((prev) => !prev);
-         if(back){
-          toast({
-            title: "Success",
-            description: "Thanks for backing this project!",
-          });
-         }else{
+        // Step 1: Call the backend to create a Razorpay order
+        const response = await BackProject({ amount, _id }); // Assuming BackProject calls your backend
+        const { orderId, key, currency } = response; // Backend should return Razorpay orderId and key
+        if (!orderId) {
           toast({
             title: "Error",
-            description: "Failed to process your backing.",
+            description: "Failed to create a payment order.",
             variant: "destructive",
           });
-         }
+          return;
+        }
+  
+        // Step 2: Initialize Razorpay payment options
+        const options = {
+          key, // Razorpay Key ID from backend
+          amount: amount * 100, // Amount in paise (smallest currency unit)
+          currency, // Currency from backend
+          name: "Project Backing",
+          description: "Thank you for supporting this project!",
+          order_id: orderId, // Razorpay Order ID
+          handler: async (paymentResponse: any) => {
+            // Step 3: Handle payment success
+            console.log(orderId,paymentResponse.razorpay_payment_id);
+            try {
+              const verifyResponse = await axiosClient.post(
+                "/verify-payment",
+                {
+                  orderId,
+                  paymentId: paymentResponse.razorpay_payment_id,
+                  signature: paymentResponse.razorpay_signature,
+                },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+              const verifyResult = await verifyResponse.data;
+  
+              if (verifyResult.success) {
+                setIsProjectBacked((prev) => !prev);
+                toast({
+                  title: "Success",
+                  description: "Thanks for backing this project!",
+                });
+              } else {
+                toast({
+                  title: "Error",
+                  description: "Payment verification failed.",
+                  variant: "destructive",
+                });
+              }
+            } catch (error) {
+              toast({
+                title: "Error",
+                description: "Failed to verify the payment.",
+                variant: "destructive",
+              });
+            }
+          },
+          prefill: {
+            name: "Your Name",
+            email: "user@example.com",
+            contact: "1234567890",
+          },
+          notes: {
+            project_id: _id,
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+  
+        const razorpay = new (window as any).Razorpay(options);
+        razorpay.on("payment.failed", (response: any) => {
+          toast({
+            title: "Error",
+            description: "Payment failed. Please try again.",
+            variant: "destructive",
+          });
+        });
+  
+        // Open the Razorpay payment modal
+        razorpay.open();
+  
         setIsBackingDialogOpen(false);
       } catch (error: any) {
+        console.log(error);
         toast({
           title: "Error",
           description: "Failed to process your backing.",
@@ -74,7 +145,7 @@ export default function ViewCampaignPage() {
       }
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -90,9 +161,7 @@ export default function ViewCampaignPage() {
               <p className="text-sm text-gray-500">{campaignData?.category}</p>
             </div>
           </div>
-
           <img src={campaignData?.image} alt={campaignData?.title} className="w-full rounded-lg mb-8" />
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <Card className="col-span-2">
               <CardHeader>
@@ -110,7 +179,6 @@ export default function ViewCampaignPage() {
                 </div>
               </CardContent>
             </Card>
-
             <Card>
               <CardHeader>
                 <CardTitle>Funding Progress</CardTitle>
@@ -120,11 +188,7 @@ export default function ViewCampaignPage() {
                 <p className="text-gray-500 mb-2">raised of ₹{campaignData?.fundingGoal?.toLocaleString()} goal</p>
                 <Progress value={(campaignData?.currentFunding / campaignData?.fundingGoal) * 100} className="h-2 mb-4" />
                 <div className="grid grid-cols-2 gap-4 text-center">
-                  {/* <div>
-                    <div className="text-2xl font-semibold">{campaignData?.donators?.toLocaleString()}</div>
-                    <p className="text-gray-500">Backers</p>
-                  </div> */}
-                  <div>
+                <div>
                     <div className="text-2xl font-semibold">{campaignData?.daysLeft}</div>
                     <p className="text-gray-500">Days Left</p>
                   </div>
@@ -143,18 +207,7 @@ export default function ViewCampaignPage() {
                       </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
-                      {/* {campaignData?.rewards?.map((reward) => (
-                        <div
-                          key={reward.id}
-                          className={`p-4 border rounded-lg cursor-pointer ${selectedReward === reward.amount ? 'border-purple-500' : 'border-gray-200'}`}
-                          onClick={() => setSelectedReward(reward.amount)}
-                        >
-                          <h3 className="font-semibold">{reward.title} - ${reward.amount}</h3>
-                          <p className="text-sm text-gray-500">{reward.description}</p>
-                          <p className="text-sm text-gray-500 mt-2">{reward.claimed} / {reward.limit} claimed</p>
-                        </div>
-                      ))} */}
-                      <div className="flex items-center space-x-2">
+                     <div className="flex items-center space-x-2">
                         <Label htmlFor="custom-amount">Custom Amount:</Label>
                         <Input
                         id="custom-amount"
@@ -163,10 +216,8 @@ export default function ViewCampaignPage() {
                         onChange={(e) => {
                           const value = Number(e.target.value);
                           setAmount(isNaN(value) ? 0 : value);
-                          setSelectedReward(null);
                         }}
                       />
-
                       </div>
                     </div>
                     <DialogFooter>

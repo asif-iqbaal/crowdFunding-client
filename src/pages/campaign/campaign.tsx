@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
@@ -33,9 +32,8 @@ const categories = [
 ]
 
 export default function StartAProjectPage() {
-  const [step, setStep] = useState(1)
-  const totalSteps = 4
-  // const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [step, setStep] = useState(1);
+  const totalSteps = 4;
   const {toast} = useToast();
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),

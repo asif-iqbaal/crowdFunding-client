@@ -19,8 +19,8 @@ export const BackProject = async function({
             }
       });
 
-      return  response.data.donation;
+      return  response.data;
   } catch (error:any) {
-    console.log("error in create campaign",error);
+   throw Error(error);
   }
 }

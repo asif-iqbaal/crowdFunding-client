@@ -1,5 +1,3 @@
-'use client'
-
 import { motion } from 'framer-motion'
 import { Button } from "../../components/ui/button"
 import { Card, CardContent } from "../../components/ui/card"
@@ -122,47 +120,6 @@ export default function About() {
             </motion.div>
           </div>
         </section>
-
-        {/* <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
-          <div className="container mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">Meet Our Team</h2>
-            <motion.div 
-              className="grid md:grid-cols-3 gap-8"
-              variants={staggerChildren}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              {[
-                { name: "Jane Doe", role: "CEO & Co-founder", image: "/placeholder.svg?height=300&width=300" },
-                { name: "John Smith", role: "CTO & Co-founder", image: "/placeholder.svg?height=300&width=300" },
-                { name: "Emily Brown", role: "Head of Community", image: "/placeholder.svg?height=300&width=300" },
-                { name: "Michael Lee", role: "Lead Designer", image: "/placeholder.svg?height=300&width=300" },
-                { name: "Sarah Johnson", role: "Marketing Director", image: "/placeholder.svg?height=300&width=300" },
-                { name: "David Wilson", role: "Head of Operations", image: "/placeholder.svg?height=300&width=300" }
-              ].map((member, index) => (
-                <motion.div key={index} variants={fadeInUp}>
-                  <Card className="overflow-hidden">
-                    <CardContent className="p-0">
-                      <img 
-                        src={member.image} 
-                        alt={member.name} 
-                        width={300} 
-                        height={300} 
-                        className="w-full h-64 object-cover"
-                      />
-                      <div className="p-6">
-                        <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-                        <p className="text-gray-600">{member.role}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section> */}
-
         <section className="py-16 px-4 bg-gradient-to-r from-purple-600 to-blue-500 text-white">
           <div className="container mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Join Our Mission</h2>
