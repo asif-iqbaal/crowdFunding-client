@@ -7,6 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const axiosClient:AxiosInstance = axios.create({
-  baseURL:import.meta.env.VITE_BAKCEND,
+  baseURL:import.meta.env.VITE_BACKEND,
   withCredentials:true,
 })
