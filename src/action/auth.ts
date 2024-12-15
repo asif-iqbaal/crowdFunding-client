@@ -25,7 +25,7 @@ export const CreateUser = async function({
 
 export const authWithGoogle = async function() {
     try {
-        window.location.href = 'http://localhost:3000/auth/google'; 
+        window.location.href = `${import.meta.env.VITE_BACKEND}/auth/google`; 
     } catch (error: any) {
         console.error('Error initiating Google Auth:', error);
         throw error;
@@ -34,7 +34,7 @@ export const authWithGoogle = async function() {
 
 export const authWithGithub = async function() {
     try {
-        window.location.href = 'http://localhost:3000/auth/github'; 
+        window.location.href = `${import.meta.env.VITE_BACKEND}/auth/github`; 
     } catch (error: any) {
         console.error('Error initiating Google Auth:', error);
         throw error;
