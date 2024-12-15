@@ -71,7 +71,6 @@ const handleBacking = async () => {
           order_id: orderId, // Razorpay Order ID
           handler: async (paymentResponse: any) => {
             // Step 3: Handle payment success
-            console.log(orderId,paymentResponse.razorpay_payment_id);
             try {
               const verifyResponse = await axiosClient.post(
                 "/verify-payment",
@@ -87,7 +86,6 @@ const handleBacking = async () => {
                 }
               );
               const verifyResult = await verifyResponse.data;
-  
               if (verifyResult.success) {
                 setIsProjectBacked((prev) => !prev);
                 toast({
