@@ -186,7 +186,7 @@ const handleBacking = async () => {
               <CardContent>
                 <div className="text-3xl font-bold mb-2">₹{campaignData?.currentFunding}</div>
                 <p className="text-gray-500 mb-2">raised of ₹{campaignData?.fundingGoal?.toLocaleString()} goal</p>
-                <Progress value={(campaignData?.currentFunding / campaignData?.fundingGoal) * 100} className="h-2 mb-4" />
+                <Progress value={(campaignData!.currentFunding / campaignData!.fundingGoal) * 100} className="h-2 mb-4" />
                 <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
                     <div className="text-2xl font-semibold">{campaignData?.daysLeft}</div>
@@ -221,7 +221,7 @@ const handleBacking = async () => {
                       </div>
                     </div>
                     <DialogFooter>
-                      {campaignData?.daysLeft<1?<p className='text-red-600'>can't back to this campaign</p>:<Button onClick={handleBacking}>Confirm Backing</Button>}
+                      {campaignData!.daysLeft<1?<p className='text-red-600'>can't back to this campaign</p>:<Button onClick={handleBacking}>Confirm Backing</Button>}
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
