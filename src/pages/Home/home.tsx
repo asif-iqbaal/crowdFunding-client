@@ -38,7 +38,7 @@ export default function Home() {
     getCamps();
 },[])
 
-  const filterCampaign = campaigns.slice(-3);
+  const filterCampaign = campaigns?.slice(-3);
   return (
     <div className="max-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
       <main>
