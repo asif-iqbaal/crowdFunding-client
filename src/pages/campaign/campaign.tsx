@@ -33,6 +33,7 @@ const categories = [
 
 export default function StartAProjectPage() {
   const [step, setStep] = useState(1);
+  const [loading,setLoading] = useState<boolean>(false);
   const totalSteps = 4;
   const {toast} = useToast();
   const form = useForm<ProjectFormValues>({
@@ -49,6 +50,7 @@ export default function StartAProjectPage() {
 
   const onSubmit = async (data: ProjectFormValues) => {
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("category", data.category);
@@ -73,7 +75,7 @@ export default function StartAProjectPage() {
       description: "Campaign created successfuly"
     });
   }
-
+  setLoading(false);
     } catch (error: any) {
       toast({
         title: "Error",
@@ -363,10 +365,15 @@ export default function StartAProjectPage() {
                 <div onClick={nextStep} className="ml-auto border px-5 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-sm cursor-pointer">
                   Next <ArrowRight className="ml-2 h-4 w-4" />
                 </div>
-              ) : (
-                <Button type="submit"  className="ml-auto bg-gradient-to-r from-purple-600 to-blue-500 text-white">
+              ) : (!loading ?
+                (<Button type="submit"  className="ml-auto bg-gradient-to-r from-purple-600 to-blue-500 text-white">
                   Launch Project <Target className="ml-2 h-4 w-4" />
+                </Button>):
+                (
+                  <Button type="submit"  className="ml-auto bg-gradient-to-r from-purple-600 to-blue-500 text-white">
+                  Launching <Target className="ml-2 h-4 w-4" />
                 </Button>
+                )
 
               )}
             </CardFooter>
