@@ -1,15 +1,15 @@
-import { motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Card, CardContent } from "../../components/ui/card"
-import { ArrowRight, Heart, Search, DollarSign, Users, Zap } from 'lucide-react'
+import { ArrowRight, Heart, Search, DollarSign, Users, Zap, PlayCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { All_Campaigns } from '../../action/allCampaigns'
 import { useEffect, useState } from 'react'
 import { ICampaigns } from '../../constant'
-
+import CampaignVideo from '../../components/shared/video'
 export default function Home() {
-  const [campaigns,setCampaigns] = useState<ICampaigns[]>([]);
+  const [campaigns, setCampaigns] = useState<ICampaigns[]>([]);
  
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -26,22 +26,32 @@ export default function Home() {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     const getCamps = async () => {
-        try {
-            const campaign = await All_Campaigns();
-            setCampaigns(campaign);
-        } catch (error:any) {
-            console.log("error",error);
-        }
+      try {
+        const campaign = await All_Campaigns();
+        setCampaigns(campaign);
+      } catch (error:any) {
+        console.log("error", error);
+      }
     }
     getCamps();
-},[])
+  }, [])
 
   const filterCampaign = campaigns?.slice(-3);
+
+  const campaignSteps = [
+    { title: "Create Your Project", description: "Define your project goals and details" },
+    { title: "Set Funding Goal", description: "Determine the amount you need to raise" },
+    { title: "Launch Campaign", description: "Share your project with the world" },
+    { title: "Engage Backers", description: "Interact with supporters and provide updates" },
+    { title: "Complete Project", description: "Deliver on your promises and celebrate success" }
+  ];
+
   return (
     <div className="max-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
       <main>
+        {/* Hero Section */}
         <section className="pt-32 pb-16 px-4 relative overflow-hidden">
           <div className="container mx-auto text-center relative z-10">
             <motion.h1 
@@ -81,6 +91,43 @@ export default function Home() {
           </div>
         </section>
 
+        {/* New Section: How to Campaign */}
+        <section className="py-16 px-4 bg-white relative overflow-hidden">
+          <div className="container mx-auto relative z-10">
+            <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">How to Start Your Campaign</h2>
+            <div className="flex flex-col lg:flex-row items-center justify-between">
+              <div className="w-full lg:w-1/2 mb-8 lg:mb-0 p-5">
+                <motion.ol 
+                  className="relative border-l border-gray-200 dark:border-gray-700"
+                  variants={staggerChildren}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  {campaignSteps.map((step, index) => (
+                    <motion.li key={index} className="mb-10 ml-6" variants={fadeInUp}>
+                      <span className="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                        <span className="text-blue-800 dark:text-blue-300">{index + 1}</span>
+                      </span>
+                      <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{step.title}</h3>
+                      <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{step.description}</p>
+                    </motion.li>
+                  ))}
+                </motion.ol>
+              </div>
+              <div className="w-full lg:w-1/2 flex justify-center items-center">
+                <CampaignVideo videoId="voF1plqqZJA" />
+              </div>
+            </div>
+          </div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+            <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          </div>
+        </section>
+
+        {/* Featured Projects Section */}
         <section className="py-16 px-4 bg-white relative overflow-hidden">
           <div className="container mx-auto relative z-10">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">Featured Projects</h2>
@@ -115,6 +162,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* How It Works Section */}
         <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50 relative overflow-hidden">
           <div className="container mx-auto relative z-10">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">How It Works</h2>
@@ -148,6 +196,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Testimonials Section */}
         <section className="py-16 px-4 bg-white">
           <div className="container mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">What Our Community Says</h2>
@@ -179,6 +228,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Call to Action Section */}
         <section className="py-16 px-4 bg-gradient-to-r from-purple-600 to-blue-500 text-white">
           <div className="container mx-auto text-center">
             <h2 className="text-4xl font-bold mb-6">Ready to Bring Your Idea to Life?</h2>
@@ -190,6 +240,7 @@ export default function Home() {
         </section>
       </main>
 
+      {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
