@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Card, CardContent } from "../../components/ui/card"
-import { ArrowRight, Heart, Search, DollarSign, Users, Zap, PlayCircle } from 'lucide-react'
+import { ArrowRight, Heart, Search, DollarSign, Users, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { All_Campaigns } from '../../action/allCampaigns'
 import { useEffect, useState } from 'react'
