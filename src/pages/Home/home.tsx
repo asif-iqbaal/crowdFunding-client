@@ -103,6 +103,7 @@ export default function Home() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
+                
                 >
                   {campaignSteps.map((step, index) => (
                     <motion.li key={index} className="mb-10 ml-6" variants={fadeInUp}>
