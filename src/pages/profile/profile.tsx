@@ -23,7 +23,7 @@ export default function ProfilePage() {
   const [userCamps, setUserCamps] = useState<ICampaigns[]>([]);
   const [newPassword,setNewPassword] = useState<string>("");
   const {toast} = useToast();
-  const {logout} = useAuth();
+  const {logout,isDark} = useAuth();
  const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${isDark?"bg-gray-950 text-white":" bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -95,7 +95,7 @@ export default function ProfilePage() {
             <CardHeader>
               <div className="flex items-center space-x-4">
                 <Avatar className="w-20 h-20 bg-gray-400">
-                  <AvatarFallback>{profileData?.username?.charAt(0)}</AvatarFallback>
+                  <AvatarFallback className='text-2xl font-bold'>{profileData?.username?.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>
                   {isEditing ? (
@@ -128,9 +128,11 @@ export default function ProfilePage() {
                   {userCamps.map((campaign) => (
                     <div key={campaign._id} className="mb-4 last:mb-0">
                       <h3 className="text-lg font-semibold">{campaign.title}</h3>
-                      <Progress  value={(campaign.fundingGoal/campaign.currentFunding*100)} className="h-2 mt-2 bg-gray-500" />
+                      <div className="mb-4 bg-gray-200 rounded-full h-2.5">
+                          <div className="bg-gradient-to-r from-purple-600 to-blue-500 h-2.5 rounded-full" style={{ width: `${(campaign.currentFunding / campaign.fundingGoal) * 100}%` }}></div>
+                        </div>
                       <div className="flex justify-between text-sm text-gray-500 mt-1">
-                        <span>{(campaign.fundingGoal/campaign.currentFunding*100)}% funded</span>
+                        <span>{(campaign.currentFunding/campaign.fundingGoal)*100}% funded</span>
                         <span>{campaign.daysLeft} days left</span>
                       </div>
                       <Separator className="my-4" />
@@ -172,7 +174,7 @@ export default function ProfilePage() {
                     Change Password
                   </Button>
                   </DialogTrigger>
-                  <DialogContent className='bg-white'>
+                  <DialogContent className={`${isDark?"bg-gray-900 text-white":"bg-white"}`}>
                   <DialogHeader>
                       <DialogTitle>Update your password</DialogTitle>
                       <DialogDescription>
