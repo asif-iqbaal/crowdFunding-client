@@ -8,9 +8,10 @@ import { All_Campaigns } from '../../action/allCampaigns'
 import { useEffect, useState } from 'react'
 import { ICampaigns } from '../../constant'
 import CampaignVideo from '../../components/shared/video'
+import { useAuth } from '../../authContext/authContext'
 export default function Home() {
   const [campaigns, setCampaigns] = useState<ICampaigns[]>([]);
- 
+  const {isDark} = useAuth();
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -49,10 +50,10 @@ export default function Home() {
   ];
 
   return (
-    <div className="max-h-screen bg-gradient-to-b from-purple-50 via-white to-blue-50">
+    <div className={`max-h-screen ${isDark?"bg-gray-950" : "bg-gradient-to-b from-purple-50 via-white to-blue-50"} bg-gradient-to-b from-purple-50 via-white to-blue-50`}>
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 px-4 relative overflow-hidden">
+        <section className={`pt-32 pb-16 px-4 relative overflow-hidden ${isDark?"bg-gray-950 text-white ": null}`} >
           <div className="container mx-auto text-center relative z-10">
             <motion.h1 
               className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500"
@@ -84,15 +85,15 @@ export default function Home() {
               </Button>
             </motion.div>
           </div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+          {isDark?<></>:<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
             <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
             <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-          </div>
+          </div>}
         </section>
 
         {/* New Section: How to Campaign */}
-        <section className="py-16 px-4 bg-white relative overflow-hidden">
+        <section className={`pt-32 pb-16 px-4 relative overflow-hidden ${isDark?"bg-gray-950 text-white ": null}`}>
           <div className="container mx-auto relative z-10">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">How to Start Your Campaign</h2>
             <div className="flex flex-col lg:flex-row items-center justify-between">
@@ -110,7 +111,7 @@ export default function Home() {
                       <span className="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-blue-900">
                         <span className="text-blue-800 dark:text-blue-300">{index + 1}</span>
                       </span>
-                      <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{step.title}</h3>
+                      <h3 className={`flex items-center mb-1 text-lg font-semibold ${isDark?"text-white":"text-gray-900"}`}>{step.title}</h3>
                       <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{step.description}</p>
                     </motion.li>
                   ))}
@@ -121,15 +122,15 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+         { isDark?<></>:<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
             <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
             <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-          </div>
+          </div>}
         </section>
 
         {/* Featured Projects Section */}
-        <section className="py-16 px-4 bg-white relative overflow-hidden">
+        <section className={`py-16 px-4 ${isDark?"bg-gray-950 text-white":"bg-white"} relative overflow-hidden`}>
           <div className="container mx-auto relative z-10">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">Featured Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -164,7 +165,7 @@ export default function Home() {
         </section>
 
         {/* How It Works Section */}
-        <section className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50 relative overflow-hidden">
+        <section className={`py-16 px-4 ${isDark?"bg-gray-950 text-white":" bg-gradient-to-r from-purple-50 to-blue-50"} relative overflow-hidden`}>
           <div className="container mx-auto relative z-10">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">How It Works</h2>
             <motion.div 
@@ -181,7 +182,7 @@ export default function Home() {
               ].map((step, index) => (
                 <motion.div 
                   key={index}
-                  className="text-center bg-white p-8 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105"
+                  className={`text-center ${isDark?"bg-gray-800 text-white":"bg-white"} p-8 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105`}
                   variants={fadeInUp}
                 >
                   <div className="flex justify-center mb-4">{step.icon}</div>
@@ -198,7 +199,7 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-16 px-4 bg-white">
+        <section className={`py-16 px-4 ${isDark?"bg-gray-900 text-white":"bg-white"}`}>
           <div className="container mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">What Our Community Says</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -209,7 +210,7 @@ export default function Home() {
               ].map((testimonial, index) => (
                 <motion.div 
                   key={index}
-                  className="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg shadow-md"
+                  className={`text-center ${isDark?"bg-gray-800 text-white":"bg-white"} p-8 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105`}
                   variants={fadeInUp}
                   initial="hidden"
                   whileInView="visible"

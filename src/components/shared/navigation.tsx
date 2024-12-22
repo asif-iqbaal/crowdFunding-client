@@ -17,12 +17,15 @@ import { Avatar, AvatarFallback} from "../../components/ui/avatar"
 export default function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { scrollY } = useScroll()
-    const {isAuthenticated,logout,user} = useAuth();
+    const {isAuthenticated,logout,user,setDarkMode,setLightMode,isDark} = useAuth();
     const backgroundColor = useTransform(
         scrollY,
         [0, 100],
-        ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 1)"]
-    )
+        isDark
+            ? ["rgba(17, 24, 39, 0)", "rgba(17, 24, 39, 1)"] 
+            : ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 1)"] 
+    );
+    
 
     const navVariants = {
         hidden: { opacity: 0, y: -50 },
@@ -33,8 +36,16 @@ export default function Navigation() {
         logout();
     }
 
+    const Dark = () => {
+        setDarkMode();
+        sessionStorage.setItem('dark','true');
+    }
+    const Light = () => {
+        setLightMode();
+        sessionStorage.removeItem('dark');
+    }
     return (
-        <div className='z-auto bg-white'>
+        <div className={`z-auto ${isDark?"bg-gray-950":"bg-white"}`}>
             <motion.header 
                 className="fixed w-full z-20"
                 initial="hidden"
@@ -42,7 +53,7 @@ export default function Navigation() {
                 variants={navVariants}
                 style={{ backgroundColor }}
             >
-                <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
+                <nav className="container mx-auto px-4 py-4 flex justify-between items-center ">
                     <Link to="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
                         CrowdFund
                     </Link>
@@ -52,6 +63,9 @@ export default function Navigation() {
                         <Link to="/about" className="text-gray-600 hover:text-purple-600 transition-colors">About Us</Link>
                     </div>
                     <div className="hidden md:flex space-x-2">
+                        <div>
+                           {isDark?<Button className='bg-white text-black rounded-2xl hover:bg-gray-700' onClick={Light}>Light</Button> : <Button className='bg-gray-950 text-white rounded-2xl hover:bg-gray-700' onClick={Dark}>Dark</Button>}
+                        </div>
                         {isAuthenticated ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -77,7 +91,7 @@ export default function Navigation() {
                         ) : (
                             <>
                               <div className="hidden md:flex space-x-2">
-                        <LoginDialog />
+                        <Button className={`${isDark?"bg-gray-500":"bg-transparent"}`}><LoginDialog /></Button>
                         <Button className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"><SignupDialog /></Button>
                         </div>
                             </>
@@ -88,7 +102,7 @@ export default function Navigation() {
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     >
-                        {isMenuOpen ? <X /> : <Menu />}
+                {isMenuOpen ? <X /> : <Menu />}
                     </button>
                 </nav>
                 {isMenuOpen && (
@@ -127,6 +141,9 @@ export default function Navigation() {
                             </DropdownMenu>
                         ) : (
                             <>
+                            <div>
+                           {isDark?<Button className='bg-white text-black rounded-2xl hover:bg-gray-700' onClick={Light}>Light</Button> : <Button className='bg-gray-950 text-white rounded-2xl hover:bg-gray-700' onClick={Dark}>Dark</Button>}
+                        </div>
                         <div className=" space-x-2">
                         <LoginDialog />
                         <Button className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"><SignupDialog /></Button>

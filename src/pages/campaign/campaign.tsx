@@ -18,7 +18,7 @@ import { useToast } from "../../hooks/use-toast";
 import { projectSchema } from '../../validations';
 import { CreateCampaign } from '../../action/createCampaign'
 import { ICreateCampaign } from '../../constant'
-
+import { useAuth } from '../../authContext/authContext'
 type ProjectFormValues = z.infer<typeof projectSchema>
 
 const categories = [
@@ -36,6 +36,8 @@ export default function StartAProjectPage() {
   const [loading,setLoading] = useState<boolean>(false);
   const totalSteps = 4;
   const {toast} = useToast();
+  const {isDark} = useAuth();
+
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
@@ -110,7 +112,7 @@ export default function StartAProjectPage() {
   const previewImage = form.watch('image')
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${isDark? "bg-gray-900 text-white" : "bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -121,7 +123,7 @@ export default function StartAProjectPage() {
             Bring Your Idea to Life
           </h1>
           <Card className="overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-purple-100 to-blue-100">
+            <CardHeader className={`${isDark? "bg-gray-900" : "bg-gradient-to-r from-purple-100 to-blue-100"}`}>
               <CardTitle className="text-2xl">Create Your Crowdfunding Campaign</CardTitle>
               <CardDescription>Let's turn your vision into reality, step by step</CardDescription>
             </CardHeader>
@@ -384,28 +386,28 @@ export default function StartAProjectPage() {
           
           </Card>     
         </motion.div>
-        <div className="mt-12 bg-white p-6 rounded-lg shadow-md">
+        <div className={`mt-12 ${isDark? "bg-gray-950" : "bg-white"} p-6 rounded-lg shadow-md`}>
           <h2 className="text-2xl font-semibold mb-4 text-purple-600">Tips for a Successful Campaign</h2>
           <ul className="space-y-2 text-gray-700">
             <li className="flex items-start">
               <ArrowRight className="mr-2 h-5 w-5 text-purple-500 flex-shrink-0 mt-1" />
-              <span>Be clear and concise in your project description</span>
+              <span className={`${isDark? "text-white":null}`}>Be clear and concise in your project description</span>
             </li>
             <li className="flex items-start">
               <ArrowRight className="mr-2 h-5 w-5 text-purple-500 flex-shrink-0 mt-1" />
-              <span>Set a realistic funding goal</span>
+              <span className={`${isDark? "text-white":null}`}>Set a realistic funding goal</span>
             </li>
             <li className="flex items-start">
               <ArrowRight className="mr-2 h-5 w-5 text-purple-500 flex-shrink-0 mt-1" />
-              <span>Create compelling rewards for backers</span>
+              <span className={`${isDark? "text-white":null}`}>Create compelling rewards for backers</span>
             </li>
             <li className="flex items-start">
               <ArrowRight className="mr-2 h-5 w-5 text-purple-500 flex-shrink-0 mt-1" />
-              <span>Promote your campaign on social media</span>
+              <span className={`${isDark? "text-white":null}`}>Promote your campaign on social media</span>
             </li>
             <li className="flex items-start">
               <ArrowRight className="mr-2 h-5 w-5 text-purple-500 flex-shrink-0 mt-1" />
-              <span>Engage with your backers regularly</span>
+              <span className={`${isDark? "text-white":null}`}>Engage with your backers regularly</span>
             </li>
           </ul>
         </div>

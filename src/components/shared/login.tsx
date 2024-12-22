@@ -18,7 +18,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginDialog () {
   const [isOpen, setIsOpen] = useState(false)
-  const {login} = useAuth();
+  const {login,isDark} = useAuth();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -89,9 +89,9 @@ export default function LoginDialog () {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Login</Button>
+        <Button variant={`${isDark?"default":"outline"}`}>Login</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white">
+      <DialogContent className={`sm:max-w-[425px] ${isDark?"bg-gray-800 text-white":"bg-white"}`}>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">Welcome Back</DialogTitle>
           <DialogDescription className="text-center">
@@ -131,7 +131,7 @@ export default function LoginDialog () {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">Login</Button>
+              <Button type="submit" className="w-full  bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">Login</Button>
             </form>
           </Form>
           <div className="mt-4 text-sm text-center">

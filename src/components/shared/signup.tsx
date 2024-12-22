@@ -18,7 +18,7 @@ type SignupFormValues = z.infer<typeof signupSchema>
 
 export default function SignupDialog() {
   const [isOpen, setIsOpen] = useState(false)
-  const {login} = useAuth();
+  const {login,isDark} = useAuth();
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -89,7 +89,7 @@ export default function SignupDialog() {
       <DialogTrigger asChild>
         <Button>Sign Up</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white">
+      <DialogContent className={`sm:max-w-[425px] ${isDark?"bg-gray-800 text-white":"bg-white"}`}>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">Create an Account</DialogTitle>
           <DialogDescription className="text-center">
@@ -155,7 +155,7 @@ export default function SignupDialog() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">Sign Up</Button>
+              <Button type="submit" className="w-full  bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">Sign Up</Button>
             </form>
           </Form>
         </motion.div>

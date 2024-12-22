@@ -9,8 +9,7 @@ import { Search, Filter } from 'lucide-react'
 import { ICampaigns } from '../../constant'
 import { All_Campaigns } from '../../action/allCampaigns'
 import { Link } from 'react-router-dom'
-
-// Mock data for campaigns
+import { useAuth } from '../../authContext/authContext'
 
 
 const categories = [
@@ -31,7 +30,7 @@ export default function DiscoverPage() {
     campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === 'All Categories' || campaign.category === selectedCategory)
   )
-
+  const {isDark} = useAuth();
   useEffect(()=>{
     const getCamps = async () => {
         try {
@@ -44,7 +43,7 @@ export default function DiscoverPage() {
     getCamps();
 },[])
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${isDark?"bg-gray-900 text-white":"bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

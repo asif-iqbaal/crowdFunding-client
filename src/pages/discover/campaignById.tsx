@@ -13,6 +13,7 @@ import { CampaignById } from '../../action/getCampaignById';
 import { ICampaignById } from '../../constant';
 import { BackProject } from '../../action/donation.action';
 import { axiosClient } from '../../lib/utils';
+import { useAuth } from '../../authContext/authContext';
 
 export default function ViewCampaignPage() {
   const [isBackingDialogOpen, setIsBackingDialogOpen] = useState(false);
@@ -21,6 +22,7 @@ export default function ViewCampaignPage() {
   const [isProjectBacked, setIsProjectBacked] = useState<boolean>(false); 
   const { _id } = useParams();
   const {toast} = useToast();
+  const {isDark} = useAuth();
 
   useEffect(() => {
     const getCampaign = async () => {
@@ -145,7 +147,7 @@ const handleBacking = async () => {
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className={`min-h-screen ${isDark?"bg-gray-950 text-white":"bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -195,9 +197,9 @@ const handleBacking = async () => {
               <CardFooter>
                 <Dialog open={isBackingDialogOpen} onOpenChange={setIsBackingDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button className="w-full">Back This Project</Button>
+                    <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">Back This Project</Button>
                   </DialogTrigger>
-                  <DialogContent className="bg-white">
+                  <DialogContent className={`${isDark? "bg-gray-900 text-white":"bg-white"}`}>
                     <DialogHeader>
                       <DialogTitle>Support This Project</DialogTitle>
                       <DialogDescription>

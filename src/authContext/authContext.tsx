@@ -10,6 +10,9 @@ interface AuthContextType {
     id:string;
   }
   name:string;
+  setDarkMode: () => void;
+  isDark: boolean;
+  setLightMode: () => void;
 }
 
 // Create a default context with placeholders
@@ -22,6 +25,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const[isDark,setIsDark] = useState<boolean>(false);
   const [user,setUser] =  useState<{ username: string; id: string }>({ username: '', id: '' });
   const [name,setName] = useState("");
   useEffect(() => {  
@@ -35,9 +39,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
           setName(decodedPayload.user.username);
         }
       }
+      const DarkMode = () => {
+        const Dark = sessionStorage.getItem('dark');
+        if(Dark){
+          setIsDark(true);
+        }
+      }
     getCookies();
+    DarkMode();
   }, []);
- 
+  const setDarkMode = () => setIsDark(true);
+  const setLightMode = () => setIsDark(false);
   const login = () => setIsAuthenticated(true);
   const logout = () => {
     sessionStorage.removeItem('token');
@@ -46,7 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, name }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, name, isDark , setDarkMode, setLightMode }}>
       {children}
     </AuthContext.Provider>
   );
