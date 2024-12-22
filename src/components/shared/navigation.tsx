@@ -69,7 +69,7 @@ export default function Navigation() {
                         {isAuthenticated ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                                    <Button variant="ghost" className={`relative h-8 w-8 rounded-full ${isDark?"text-white":null}`}>
                                         <Avatar className="h-8 w-8">
                                             {/* <AvatarImage src={} alt={user?.username} /> */}
                                             <AvatarFallback>{user?.username?.charAt(0) || <User />}</AvatarFallback>
@@ -121,7 +121,7 @@ export default function Navigation() {
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                                        <Avatar className="h-8 w-8">
+                                        <Avatar className="h-8 w-8 ">
                                             {/* <AvatarImage src={} alt={user?.username} /> */}
                                             <AvatarFallback>{user?.username?.charAt(0) || <User />}</AvatarFallback>
                                         </Avatar>
