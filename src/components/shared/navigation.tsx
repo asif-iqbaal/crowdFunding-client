@@ -17,7 +17,8 @@ import { Avatar, AvatarFallback} from "../../components/ui/avatar"
 export default function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { scrollY } = useScroll()
-    const {isAuthenticated,logout,user,setDarkMode,setLightMode,isDark} = useAuth();
+    const {isAuthenticated,logout,user,setDarkMode,setLightMode,isDark,role} = useAuth();
+    console.log(role);
     const backgroundColor = useTransform(
         scrollY,
         [0, 100],
@@ -80,9 +81,9 @@ export default function Navigation() {
                                     <DropdownMenuItem asChild>
                                         <Link to="/profile">Profile</Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
+                                    {role == 'admin' && <DropdownMenuItem asChild>
                                         <Link to="/dashboard">Dashboard</Link>
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem>}
                                     <DropdownMenuItem onClick={handleLogout}>
                                         Log out
                                     </DropdownMenuItem>
