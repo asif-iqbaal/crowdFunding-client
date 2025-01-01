@@ -26,7 +26,6 @@ export default function DiscoverPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All Categories')
   const [campaigns,setCampaigns] = useState<ICampaigns[]>([]);
-  const [filterCamps,setFilterCamps] = useState<ICampaigns[]>([]);
   const filteredCampaigns = campaigns.filter(campaign => 
     campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === 'All Categories' || campaign.category === selectedCategory)
