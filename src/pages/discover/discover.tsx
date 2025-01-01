@@ -26,6 +26,7 @@ export default function DiscoverPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All Categories')
   const [campaigns,setCampaigns] = useState<ICampaigns[]>([]);
+  const [filterCamps,setFilterCamps] = useState<ICampaigns[]>([]);
   const filteredCampaigns = campaigns.filter(campaign => 
     campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === 'All Categories' || campaign.category === selectedCategory)
@@ -85,6 +86,7 @@ export default function DiscoverPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence>
               {filteredCampaigns.map((campaign) => (
+                campaign.approved === true &&
                 <motion.div
                   key={campaign._id}
                   initial={{ opacity: 0, scale: 0.9 }}

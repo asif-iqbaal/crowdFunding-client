@@ -30,6 +30,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
   const [user,setUser] =  useState<{ username: string; id: string }>({ username: '', id: '' });
   const [name,setName] = useState("");
   const [role,setRole] = useState('user');
+  const login = () => setIsAuthenticated(true);
   useEffect(() => {  
       const getCookies = async () => {
         const token =  sessionStorage.getItem('token');
@@ -50,10 +51,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ( {children} ) => {
       }
     getCookies();
     DarkMode();
-  }, []);
+  }, [login]);
   const setDarkMode = () => setIsDark(true);
   const setLightMode = () => setIsDark(false);
-  const login = () => setIsAuthenticated(true);
+  
   const logout = () => {
     sessionStorage.removeItem('token');
     setUser({ username: '', id: '' });

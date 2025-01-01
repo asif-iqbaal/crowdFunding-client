@@ -30,6 +30,8 @@ export interface Signup {
     duration:number;
     image:string;
     daysLeft:number;
+    approved?:boolean;
+    status?:'active'|'inactive'|'pending';
   }
 
   export interface ICampaignById{

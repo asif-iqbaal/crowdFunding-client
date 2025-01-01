@@ -8,6 +8,7 @@ import ViewCampaignPage from "./pages/discover/campaignById"
 import ScrollToTop from "./components/shared/scrollToTop"
 import { Toaster } from "./components/ui/toaster"
 import ProfilePage from "./pages/profile/profile"
+import AdminDashboard from "./pages/Admin/admin-dashboard"
 import { useAuth } from "./authContext/authContext"
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
       <Route path='/about' element={<About />} />
       <Route path='/start-project' element={<StartAProjectPage />} />
       <Route path='/profile' element={<ProfilePage />} />
-      {role == 'admin' && <Route path='/profile' element={<ProfilePage />} />}
+      {role == 'admin' && <Route path='/dashboard' element={<AdminDashboard />} />}
+      {role == 'admin' && <Route path='/admin/campaign/:_id' element={<ViewCampaignPage/>} />}
         <Route path="/discover" >
           <Route index element={<DiscoverPage />} /> 
           <Route path="campaign/:_id" element={<ViewCampaignPage />} />

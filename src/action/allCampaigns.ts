@@ -10,3 +10,35 @@ export const All_Campaigns = async function():Promise<ICampaigns[]>{
         return error;
       }
 }
+
+export const ApprovedCampaigns = async function (id:string) {
+  try {
+    const token = sessionStorage.getItem('token');
+
+    const res = await axiosClient.patch(`approvecampaign/${id}`
+      , {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+    return res.data;
+  } catch (error:any) {
+    return error;
+  }
+}
+export const RejectCampaigns = async function (id:string) {
+  try {
+    const token = sessionStorage.getItem('token');
+    const res = await axiosClient.patch(`rejectcampaign/${id}`,
+      {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }   
+    );
+    return res.data;
+  } catch (error:any) {
+    return error;
+  }
+}

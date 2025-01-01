@@ -18,7 +18,6 @@ export default function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const { scrollY } = useScroll()
     const {isAuthenticated,logout,user,setDarkMode,setLightMode,isDark,role} = useAuth();
-    console.log(role);
     const backgroundColor = useTransform(
         scrollY,
         [0, 100],
