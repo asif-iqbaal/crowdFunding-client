@@ -30,7 +30,7 @@ export default function AdminDashboard() {
         setCampaigns(data);
     }
     GetCamps();
-  },[toast]);
+  },[campaigns]);
 
   const handleApproved = async(id:string) => {
     try {

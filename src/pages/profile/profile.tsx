@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Separator } from "../../components/ui/separator"
 import { useToast } from "../../hooks/use-toast";
 import { useAuth } from '../../authContext/authContext'
-import { Settings, LogOut,  Trash2 } from 'lucide-react'
+import { Settings, LogOut,  Trash2, Loader2 } from 'lucide-react'
 import { DeleteUser, UpdatePassword, UserCampaigns, UserProfile } from '../../action/profile'
 import { ICampaigns, IProfile } from '../../constant'
 import { useNavigate } from 'react-router-dom'
@@ -21,6 +21,7 @@ export default function ProfilePage() {
   const [openDialog,setOpenDialog] = useState(false);
   const [userCamps, setUserCamps] = useState<ICampaigns[]>([]);
   const [newPassword,setNewPassword] = useState<string>("");
+  const [loading,setLoading] = useState<boolean>(true);
   const {toast} = useToast();
   const {logout,isDark} = useAuth();
  const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function ProfilePage() {
     const fetchUser = async () => {
       const data = await UserProfile();
       setProfileData(data);
+      setLoading(false);
     };
     fetchUser();
   }, []);
@@ -82,6 +84,14 @@ export default function ProfilePage() {
       navigate('/')
   }
 
+  if (loading) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
+  }
+  
   return (
     <div className={`min-h-screen ${isDark?"bg-gray-950 text-white":" bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-4xl mx-auto">

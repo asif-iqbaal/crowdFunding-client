@@ -5,7 +5,7 @@ import { Button } from "../../components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select"
 import { Badge } from "../../components/ui/badge"
-import { Search, Filter } from 'lucide-react'
+import { Search, Filter, Loader2 } from 'lucide-react'
 import { ICampaigns } from '../../constant'
 import { All_Campaigns } from '../../action/allCampaigns'
 import { Link } from 'react-router-dom'
@@ -26,6 +26,7 @@ export default function DiscoverPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All Categories')
   const [campaigns,setCampaigns] = useState<ICampaigns[]>([]);
+  const [loading,setLoading] = useState<boolean>(true);
   const filteredCampaigns = campaigns.filter(campaign => 
     campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === 'All Categories' || campaign.category === selectedCategory)
@@ -38,10 +39,21 @@ export default function DiscoverPage() {
             setCampaigns(campaign);
         } catch (error:any) {
             console.log("error",error);
+        }finally{
+          setLoading(false);
         }
     }
     getCamps();
 },[])
+
+if (loading) {
+  return (
+    <div className="h-screen w-screen flex items-center justify-center">
+      <Loader2 className="animate-spin" />
+    </div>
+  );
+}
+
   return (
     <div className={`min-h-screen ${isDark?"bg-gray-900 text-white":"bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-7xl mx-auto">

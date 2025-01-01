@@ -7,6 +7,7 @@ export const CreateCampaign = async function({
     description,
     fundingGoal,
     duration,
+    phone,
     image
 }:ICreateCampaign){
     try {
@@ -18,6 +19,7 @@ export const CreateCampaign = async function({
             description,
             fundingGoal,
             duration,
+            phone,
             image
         },
         {

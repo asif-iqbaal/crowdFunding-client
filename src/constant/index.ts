@@ -16,6 +16,7 @@ export interface Signup {
     description: string;
     fundingGoal: number;
     duration: number;
+    phone:number;
     image?:File;
   }
   

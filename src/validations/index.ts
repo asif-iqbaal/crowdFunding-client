@@ -36,5 +36,6 @@ export const projectSchema = z.object({
   description: z.string().min(5),
   fundingGoal: z.number().min(1000),
   duration: z.number().min(10),
+  phone: z.number().min(10),
   image: z.instanceof(File).optional(),
 });

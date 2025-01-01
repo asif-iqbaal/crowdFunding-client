@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "../../components/ui/separator"
 import { Slider } from "../../components/ui/slider"
 import { Progress } from "../../components/ui/progress"
-import { ArrowRight, HelpCircle, DollarSign, Calendar, Target } from 'lucide-react'
+import { ArrowRight, HelpCircle, IndianRupee, Calendar, Target } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../components/ui/tooltip"
 import { useToast } from "../../hooks/use-toast";
 import { projectSchema } from '../../validations';
@@ -23,11 +23,13 @@ type ProjectFormValues = z.infer<typeof projectSchema>
 
 const categories = [
   { value: "technology", label: "Technology" },
-  { value: "art", label: "Art" },
-  { value: "film", label: "Film" },
+  { value: "art", label: "Arts & Culture" },
+  {value: "health", label: " Health & Wellness" },
+  { value: "Education", label: "education" },
   { value: "games", label: "Games" },
-  { value: "music", label: "Music" },
+  { value: "social", label: "Social Causes" },
   { value: "publishing", label: "Publishing" },
+  { value: "pet&animals", label: "Pets & Animals" },
   { value: "environment", label: "Environment" }
 ]
 
@@ -46,7 +48,7 @@ export default function StartAProjectPage() {
       description: "",
       fundingGoal: 1000,
       duration: 30,
-
+      phone:0
     },
   })
 
@@ -59,6 +61,7 @@ export default function StartAProjectPage() {
       formData.append("description", data.description);
       formData.append("fundingGoal", data.fundingGoal.toString());
       formData.append("duration", data.duration.toString());
+      formData.append("phone",data.phone.toString());
       if (data.image) {
         formData.append("image", data.image);
       }
@@ -68,6 +71,7 @@ export default function StartAProjectPage() {
     description: formData.get("description") as string,
     fundingGoal: Number(formData.get("fundingGoal")),
     duration: Number(formData.get("duration")),
+    phone: Number(formData.get("phone")),
     image: formData.get("image") as File
 };
   const res = await CreateCampaign(campaignData);
@@ -155,12 +159,28 @@ export default function StartAProjectPage() {
                           name="title"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Project Title</FormLabel>
+                              <FormLabel>Campaign Title</FormLabel>
                               <FormControl>
                                 <Input placeholder="Enter your project title" {...field} />
                               </FormControl>
                               <FormDescription>
-                                Choose a clear, descriptive title for your project.
+                                Choose a clear, descriptive title for your campaign.
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                         <FormField
+                          control={form.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Mobile No.</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Enter your mobile number" type='number' {...field}  onChange={(e) => field.onChange(Number(e.target.value))}/>
+                              </FormControl>
+                              <FormDescription>
+                                please provide a socially active number.
                               </FormDescription>
                               <FormMessage />
                             </FormItem>
@@ -187,7 +207,7 @@ export default function StartAProjectPage() {
                                 </SelectContent>
                               </Select>
                               <FormDescription>
-                                Choose the category that best fits your project.
+                                Choose the category that best fits your campaign.
                               </FormDescription>
                               <FormMessage />
                             </FormItem>
@@ -201,7 +221,7 @@ export default function StartAProjectPage() {
                             <div className="space-y-1 text-center">
                             {previewImage && (
                               <div>
-                                <span className="font-medium">Project Image:</span>
+                                <span className="font-medium">Campaign Image:</span>
                                 <img src={URL.createObjectURL(previewImage)} alt="Project" className="mt-2 h-32 w-32 object-cover rounded-md" />
                               </div>
                             )}
@@ -243,7 +263,7 @@ export default function StartAProjectPage() {
                           name="description"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Project Description</FormLabel>
+                              <FormLabel>Campaign Description</FormLabel>
                               <FormControl>
                                 <Textarea 
                                   placeholder="Describe your project in detail" 
@@ -252,7 +272,7 @@ export default function StartAProjectPage() {
                                 />
                               </FormControl>
                               <FormDescription>
-                                Provide a comprehensive description of your project, its goals, and why people should support it.
+                                Provide a comprehensive description of your campaign, its goals, and why people should support it.
                               </FormDescription>
                               <FormMessage />
                             </FormItem>
@@ -277,7 +297,7 @@ export default function StartAProjectPage() {
                               <FormLabel>Funding Goal (₹)</FormLabel>
                               <FormControl>
                                 <div className="flex items-center space-x-2">
-                                  <DollarSign className="text-gray-500" />
+                                  <IndianRupee className="text-gray-500" />
                                   <Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
                                 </div>
                               </FormControl>
@@ -302,14 +322,14 @@ export default function StartAProjectPage() {
                               </FormControl>
                               <Slider
                                 min={1}
-                                max={60}
+                                max={100}
                                 step={1}
                                 value={[field.value]}
                                 onValueChange={(value) => field.onChange(value[0])}
                                 className="mt-2"
                               />
                               <FormDescription>
-                                Set the duration of your campaign in days (1-60 days).
+                                Set the duration of your campaign in days (1-100 days).
                               </FormDescription>
                               <FormMessage />
                             </FormItem>
@@ -326,7 +346,7 @@ export default function StartAProjectPage() {
                         exit="exit"
                         transition={{ duration: 0.3 }}
                       >
-                        <h3 className="text-lg font-semibold mb-4">Review Your Project</h3>
+                        <h3 className="text-lg font-semibold mb-4">Review Your Campaign</h3>
                         <div className="space-y-4">
                           <div>
                             <span className="font-medium">Title:</span> {form.getValues('title')}
@@ -347,7 +367,7 @@ export default function StartAProjectPage() {
                           {previewImage && (
                             <div>
                               <span className="font-medium">Project Image:</span>
-                              <img  alt="Project" className="mt-2 h-32 w-32 object-cover rounded-md" />
+                              <img  src={URL.createObjectURL(previewImage)} alt="Project" className="mt-2 h-32 w-32 object-cover rounded-md" />
                             </div>
                           )}
                         </div>
@@ -372,7 +392,7 @@ export default function StartAProjectPage() {
                   Launch Project <Target className="ml-2 h-4 w-4" />
                 </Button>):
                 (
-                  <Button type="submit"  className="ml-auto bg-gradient-to-r from-purple-600 to-blue-500 text-white">
+                  <Button type="submit"  className="ml-auto bg-gradient-to-r from-purple-300 to-blue-200 text-white">
                   Launching <Target className="ml-2 h-4 w-4" />
                 </Button>
                 )

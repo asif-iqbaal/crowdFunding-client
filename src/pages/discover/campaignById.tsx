@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useToast } from "../../hooks/use-toast";
-import { Heart, Share2 } from 'lucide-react';
+import { Heart, Share2,Loader2 } from 'lucide-react';
 import { CampaignById } from '../../action/getCampaignById';
 import { ICampaignById } from '../../constant';
 import { BackProject } from '../../action/donation.action';
@@ -20,6 +20,7 @@ export default function ViewCampaignPage() {
   const [amount, setAmount] = useState<number>(0);
   const [campaignData, setCampaignData] = useState<ICampaignById | null>(null);
   const [isProjectBacked, setIsProjectBacked] = useState<boolean>(false); 
+  const [loading,setLoading] = useState<boolean>(true);
   const { _id } = useParams();
   const {toast} = useToast();
   const {isDark} = useAuth();
@@ -36,6 +37,8 @@ export default function ViewCampaignPage() {
             description: "Failed to fetch campaign details",
             variant: "destructive",
           });
+        }finally{
+        setLoading(false);
         }
       } else {
         toast({
@@ -43,6 +46,7 @@ export default function ViewCampaignPage() {
           description: "Failed to fetch campaign details",
           variant: "destructive",
         });
+        setLoading(false);
       }
     };
     getCampaign();
@@ -145,7 +149,15 @@ const handleBacking = async () => {
       }
     }
   };
-  
+
+  if (loading) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen ${isDark?"bg-gray-950 text-white":"bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-4xl mx-auto">
