@@ -10,6 +10,7 @@ import { Toaster } from "./components/ui/toaster"
 import ProfilePage from "./pages/profile/profile"
 import AdminDashboard from "./pages/Admin/admin-dashboard"
 import { useAuth } from "./authContext/authContext"
+import NotFound from "./components/shared/pageNotFound"
 
 function App() {
     const {role} = useAuth();
@@ -28,6 +29,7 @@ function App() {
           <Route index element={<DiscoverPage />} /> 
           <Route path="campaign/:_id" element={<ViewCampaignPage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
     </Routes>
     <Toaster />
    </Router>
