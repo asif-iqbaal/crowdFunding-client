@@ -126,7 +126,7 @@ export default function AdminDashboard() {
                 <TableHead>Campaign</TableHead>
                 <TableHead>Creator</TableHead>
                 <TableHead>Goal</TableHead>
-                <TableHead>Category</TableHead>
+                <TableHead>Phone</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center">
-                      {campaign?.category}
+                      {campaign?.phone}
                     </div>
                   </TableCell>
                   <TableCell>

@@ -31,6 +31,7 @@ export interface Signup {
     duration:number;
     image:string;
     daysLeft:number;
+    phone:number;
     approved?:boolean;
     status?:'active'|'inactive'|'pending';
   }
