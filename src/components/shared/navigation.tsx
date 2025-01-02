@@ -131,9 +131,9 @@ export default function Navigation() {
                                     <DropdownMenuItem asChild>
                                         <Link to="/profile">Profile</Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
+                                    {role == 'admin' && <DropdownMenuItem asChild>
                                         <Link to="/dashboard">Dashboard</Link>
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem>}
                                     <DropdownMenuItem onClick={handleLogout}>
                                         Log out
                                     </DropdownMenuItem>
