@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { Button } from "../../components/ui/button"
-import { Input } from "../../components/ui/input"
 import { Card, CardContent } from "../../components/ui/card"
 import { ArrowRight, Heart, Search, DollarSign, Users, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -9,6 +8,8 @@ import { useEffect, useState } from 'react'
 import { ICampaigns } from '../../constant'
 import CampaignVideo from '../../components/shared/video'
 import { useAuth } from '../../authContext/authContext'
+import { Footer } from '../../components/shared/footer'
+
 export default function Home() {
   const [campaigns, setCampaigns] = useState<ICampaigns[]>([]);
   const {isDark} = useAuth();
@@ -50,7 +51,7 @@ export default function Home() {
   ];
 
   return (
-    <div className={`max-h-screen ${isDark?"bg-gray-950" : "bg-gradient-to-b from-purple-50 via-white to-blue-50"} bg-gradient-to-b from-purple-50 via-white to-blue-50`}>
+    <div className={`max-h-screen ${isDark?"bg-gray-950" : "bg-[#fdfffc]"} bg-gradient-to-b from-purple-50 via-white to-blue-50`}>
       <main>
         {/* Hero Section */}
         <section className={`pt-32 pb-16 px-4 relative overflow-hidden ${isDark?"bg-gray-950 text-white ": null}`} >
@@ -85,11 +86,11 @@ export default function Home() {
               </Button>
             </motion.div>
           </div>
-          {isDark?<></>:<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+          {/* {isDark?<></>:<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
             <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
             <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-          </div>}
+          </div>} */}
         </section>
 
         {/* New Section: How to Campaign */}
@@ -122,11 +123,11 @@ export default function Home() {
               </div>
             </div>
           </div>
-         { isDark?<></>:<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+         {/* { isDark?<></>:<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
             <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
             <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-          </div>}
+          </div>} */}
         </section>
 
         {/* Featured Projects Section */}
@@ -158,10 +159,10 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+          {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
             <div className="absolute top-0 right-0 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute bottom-0 left-0 w-72 h-72 bg-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-          </div>
+          </div> */}
         </section>
 
         {/* How It Works Section */}
@@ -192,10 +193,10 @@ export default function Home() {
               ))}
             </motion.div>
           </div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+          {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
             <div className="absolute top-0 left-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
             <div className="absolute bottom-0 right-0 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-          </div>
+          </div> */}
         </section>
 
         {/* Testimonials Section */}
@@ -243,43 +244,12 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">CrowdFund</h3>
-              <p className="text-gray-400">Empowering creators and innovators worldwide.</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">How It Works</Link></li>
-                <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">Start a Project</Link></li>
-                <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">Explore</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Support</h4>
-              <ul className="space-y-2">
-                <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">FAQ</Link></li>
-                <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">Guidelines</Link></li>
-                <li><Link to="#" className="text-gray-400 hover:text-white transition-colors">Contact Us</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Stay Connected</h4>
-              <p className="text-gray-400 mb-4">Subscribe to our newsletter for updates</p>
-              <form className="flex">
-                <Input type="email" placeholder="Your email" className="rounded-r-none bg-gray-800 border-gray-700 text-white" />
-                <Button type="submit" className="rounded-l-none bg-gradient-to-r from-purple-600 to-blue-500">Subscribe</Button>
-              </form>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} CrowdFund. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
+       {isDark?<></>:<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-6xl">
+            <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          </div>}
     </div>
   )
 }

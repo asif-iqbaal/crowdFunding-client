@@ -10,6 +10,7 @@ import { ICampaigns } from '../../constant'
 import { All_Campaigns } from '../../action/allCampaigns'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../authContext/authContext'
+import { Footer } from '../../components/shared/footer'
 
 
 const categories = [
@@ -143,6 +144,7 @@ if (loading) {
           )}
         </motion.div>
       </div>
+      <Footer />
     </div>
   )
 }

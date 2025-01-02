@@ -55,7 +55,7 @@ export default function Navigation() {
             >
                 <nav className="container mx-auto px-4 py-4 flex justify-between items-center ">
                     <Link to="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
-                        CrowdFund
+                        riseTogether
                     </Link>
                     <div className="hidden md:flex space-x-6">
                         <Link to="/discover" className="text-gray-600 hover:text-purple-600 transition-colors">Discover</Link>

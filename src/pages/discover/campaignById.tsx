@@ -14,6 +14,7 @@ import { ICampaignById } from '../../constant';
 import { BackProject } from '../../action/donation.action';
 import { axiosClient } from '../../lib/utils';
 import { useAuth } from '../../authContext/authContext';
+import { Footer } from '../../components/shared/footer';
 
 export default function ViewCampaignPage() {
   const [isBackingDialogOpen, setIsBackingDialogOpen] = useState(false);
@@ -173,7 +174,7 @@ const handleBacking = async () => {
               <p className="text-sm text-gray-500">{campaignData?.category}</p>
             </div>
           </div>
-          <img src={campaignData?.image} alt={campaignData?.title} className="w-full rounded-lg mb-8" />
+          <img src={campaignData?.image} alt={campaignData?.title} className="w-full rounded-xl mb-8" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <Card className="col-span-2">
               <CardHeader>
@@ -209,7 +210,7 @@ const handleBacking = async () => {
               <CardFooter>
                 <Dialog open={isBackingDialogOpen} onOpenChange={setIsBackingDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">Back This Project</Button>
+                    <Button className="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-xl">Donate</Button>
                   </DialogTrigger>
                   <DialogContent className={`${isDark? "bg-gray-900 text-white":"bg-white"}`}>
                     <DialogHeader>
@@ -242,6 +243,7 @@ const handleBacking = async () => {
           </div>
         </motion.div>
       </div>
+      <Footer />
     </div>
   );
 }
