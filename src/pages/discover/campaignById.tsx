@@ -27,6 +27,7 @@ export default function ViewCampaignPage() {
   const {toast} = useToast();
   const {isDark} = useAuth();
 
+
   useEffect(() => {
     const getCampaign = async () => {
       if (_id) {

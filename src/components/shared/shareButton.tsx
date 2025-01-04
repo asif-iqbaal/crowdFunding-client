@@ -13,9 +13,10 @@ interface ShareButtonProps {
   url: string
 }
 
-export default function ShareButton({ url }: ShareButtonProps = { url: 'https://example.com' }) {
+export default function ShareButton({ url }: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
   const {toast} = useToast();
+  
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(url)
@@ -48,12 +49,12 @@ export default function ShareButton({ url }: ShareButtonProps = { url: 'https://
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="w-full sm:w-auto">ś
+        <Button variant="outline" className="w-full sm:w-auto">
           <Share2 className="mr-2 h-4 w-4" /> Share
-        </Button>ś
-      </PopoverTrigger>ś
-      <PopoverContent className="w-auto bg-white rounded-xl">
-        <div className="grid gap-4">
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="md:w-auto  bg-white rounded-xl ">
+        <div className="md:grid md:gap-4 flex flex-col">
           <h4 className="font-medium leading-none">Share this project</h4>
           <div className="flex items-center gap-2">
             <Input 
@@ -65,7 +66,7 @@ export default function ShareButton({ url }: ShareButtonProps = { url: 'https://
               <Copy className="h-4 w-4" />
             </Button>
           </div>
-          <div className="flex justify-between">
+          <div className="md:flex md:justify-between ">
             <Button onClick={shareOnFacebook} variant="outline" className="flex-1 mr-2">
               <Facebook className="mr-2 h-4 w-4" /> Facebook
             </Button>
