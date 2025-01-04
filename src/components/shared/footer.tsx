@@ -6,7 +6,7 @@ import { useAuth } from "../../authContext/authContext";
 export function Footer(){
     const {isDark} = useAuth();
     return(
-        <footer className={`${isDark?"bg-gray-950 text-white":"bg-white text-black"}  py-12`}>
+        <footer className={`${isDark?"bg-gray-950 text-white":"bg-white text-black"}  `}>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>

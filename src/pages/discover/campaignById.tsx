@@ -8,13 +8,14 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useToast } from "../../hooks/use-toast";
-import { Heart, Share2,Loader2 } from 'lucide-react';
+import { Heart,Loader2 } from 'lucide-react';
 import { CampaignById } from '../../action/getCampaignById';
 import { ICampaignById } from '../../constant';
 import { BackProject } from '../../action/donation.action';
 import { axiosClient } from '../../lib/utils';
 import { useAuth } from '../../authContext/authContext';
 import { Footer } from '../../components/shared/footer';
+import ShareButton from '../../components/shared/shareButton';
 
 export default function ViewCampaignPage() {
   const [isBackingDialogOpen, setIsBackingDialogOpen] = useState(false);
@@ -186,8 +187,8 @@ const handleBacking = async () => {
                   <Button variant="outline" className="flex items-center">
                     <Heart className="mr-2 h-4 w-4" /> Like
                   </Button>
-                  <Button variant="outline" className="flex items-center">
-                    <Share2 className="mr-2 h-4 w-4" /> Share
+                  <Button variant="default" className="flex items-center">
+                    <ShareButton url={location.href}/>
                   </Button>
                 </div>
               </CardContent>
