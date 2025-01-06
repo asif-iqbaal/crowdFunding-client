@@ -58,6 +58,7 @@ export default function Navigation() {
                         riseTogether
                     </Link>
                     <div className="hidden md:flex space-x-6">
+                        <Link to="/" className="text-gray-600 hover:text-purple-600 transition-colors">Home</Link>
                         <Link to="/discover" className="text-gray-600 hover:text-purple-600 transition-colors">Discover</Link>
                         <Link to="/start-project" className="text-gray-600 hover:text-purple-600 transition-colors">Start a Project</Link>
                         <Link to="/about" className="text-gray-600 hover:text-purple-600 transition-colors">About Us</Link>

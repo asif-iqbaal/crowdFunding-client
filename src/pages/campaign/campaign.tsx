@@ -134,11 +134,11 @@ export default function StartAProjectPage() {
             <CardContent className="pt-6">
               <div className="mb-8">
                 <Progress value={(step / totalSteps) * 100} className="h-2" />
-                <div className="flex justify-between mt-2 text-sm text-gray-500">
-                  <span>Start</span>
-                  <span>Details</span>
-                  <span>Funding</span>
-                  <span>Review</span>
+                <div className="flex justify-between mt-2 text-sm font-semibold text-gray-500">
+                  <span className={`${step >= 1 ? 'text-purple-700':null} `}>Start</span>
+                  <span className={`${step >= 2 ? 'text-purple-700':null}`}>Details</span>
+                  <span className={`${step >= 3 ? 'text-purple-700':null}`}>Funding</span>
+                  <span className={`${step >= 4 ? 'text-purple-700':null}`}>Review</span>
                 </div>
               </div>
               <Form {...form}>
@@ -166,7 +166,7 @@ export default function StartAProjectPage() {
                               <FormDescription>
                                 Choose a clear, descriptive title for your campaign.
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage  className='text-red-600'/>
                             </FormItem>
                           )}
                         />
@@ -182,7 +182,7 @@ export default function StartAProjectPage() {
                               <FormDescription>
                                 please provide a socially active number.
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage className='text-red-600' />
                             </FormItem>
                           )}
                         />
@@ -209,7 +209,7 @@ export default function StartAProjectPage() {
                               <FormDescription>
                                 Choose the category that best fits your campaign.
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage  className='text-red-600'/>
                             </FormItem>
                           )}
                         />
@@ -274,7 +274,7 @@ export default function StartAProjectPage() {
                               <FormDescription>
                                 Provide a comprehensive description of your campaign, its goals, and why people should support it.
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage  className='text-red-600'/>
                             </FormItem>
                           )}
                         />
@@ -304,7 +304,7 @@ export default function StartAProjectPage() {
                               <FormDescription>
                                 Set your funding goal in USD. This is the amount you need to raise for your project.
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage className='text-red-600' />
                             </FormItem>
                           )}
                         />
@@ -331,7 +331,7 @@ export default function StartAProjectPage() {
                               <FormDescription>
                                 Set the duration of your campaign in days (1-100 days).
                               </FormDescription>
-                              <FormMessage />
+                              <FormMessage  className='text-red-600'/>
                             </FormItem>
                           )}
                         />
@@ -350,6 +350,9 @@ export default function StartAProjectPage() {
                         <div className="space-y-4">
                           <div>
                             <span className="font-medium">Title:</span> {form.getValues('title')}
+                          </div>
+                          <div>
+                            <span className="font-medium">Phone:</span> {form.getValues('phone')}
                           </div>
                           <div>
                             <span className="font-medium">Category:</span> {categories.find(c => c.value === form.getValues('category'))?.label}
@@ -379,12 +382,12 @@ export default function StartAProjectPage() {
             <CardFooter className="flex justify-between">
               {step > 1 && (
                 
-                <div  onClick={prevStep} className=' border p-2 bg-black text-white rounded-sm cursor-pointer'>
+                <div  onClick={prevStep} className=' border md:w-28 flex justify-center items-center px-5 py-2 bg-black text-white rounded-sm cursor-pointer'>
                   Previous
                 </div>
               )}
               {step < totalSteps ? (
-                <div onClick={nextStep} className="ml-auto border px-5 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-sm cursor-pointer">
+                <div onClick={nextStep} className="ml-auto border md:w-28 flex justify-center items-center px-5 py-2  bg-gradient-to-r from-purple-600 to-blue-500 text-white cursor-pointer">
                   Next <ArrowRight className="ml-2 h-4 w-4" />
                 </div>
               ) : (!loading ?

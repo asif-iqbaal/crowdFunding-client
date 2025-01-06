@@ -31,11 +31,11 @@ export const projectSchemas = z.object({
   }).optional(),
 })
 export const projectSchema = z.object({
-  title: z.string(),
-  category: z.string(),
-  description: z.string().min(5),
-  fundingGoal: z.number().min(1000),
-  duration: z.number().min(10),
+  title: z.string().min(5, { message: "Title must be at least 5 characters long" }),
+  category: z.string().min(1, { message: "Please select a category" }),
+  description: z.string().min(50, { message: "Description must be at least 50 characters long" }),
+  fundingGoal: z.number().min(1000, { message: "Fundingoal atleast 1000" }),
+  duration: z.number().min(10,{ message: "Duration must be at least 10 day" }),
   phone: z.number().min(10),
   image: z.instanceof(File).optional(),
 });
