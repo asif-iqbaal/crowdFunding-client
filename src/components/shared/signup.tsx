@@ -5,13 +5,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "../../components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form"
 import { FaGoogle,FaGithub } from 'react-icons/fa';
 import { signupSchema } from '../../validations'
 import { Signup } from '../../constant'
 import { authWithGithub, authWithGoogle, CreateUser } from '../../action/auth'
 import { useAuth } from '../../authContext/authContext'
+import { X } from "lucide-react"
 import { toast } from '../../hooks/use-toast'
 
 type SignupFormValues = z.infer<typeof signupSchema>
@@ -85,11 +86,19 @@ export default function SignupDialog() {
     }
   }
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+    <div>
+      <Button onClick={() => setIsOpen(true)} >Sign Up</Button>
+    <Dialog open={isOpen} modal={true}>
+      {/* <DialogTrigger asChild>
         <Button>Sign Up</Button>
-      </DialogTrigger>
+      </DialogTrigger> */}
+
       <DialogContent className={`sm:max-w-[425px] ${isDark?"bg-gray-800 text-white":"bg-white"}`}>
+      <DialogClose asChild>
+        <button onClick={() => setIsOpen(false)} className="absolute right-2 top-2">
+              <X className="h-6 w-6 hover:bg-red-500 hover:text-white transition-all" />
+          </button>
+        </DialogClose>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">Create an Account</DialogTitle>
           <DialogDescription className="text-center">
@@ -194,5 +203,6 @@ export default function SignupDialog() {
         </div>
       </DialogContent>
     </Dialog>
+    </div>
   )
 }

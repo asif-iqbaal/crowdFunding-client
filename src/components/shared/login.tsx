@@ -5,12 +5,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../../components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../components/ui/form"
 import { FaGoogle,FaGithub } from 'react-icons/fa';
 import { loginSchema } from '../../validations'
 import { authWithGithub, authWithGoogle, LoginUser } from '../../action/auth'
 import { Login } from '../../constant'
+import { X } from "lucide-react"
 import { useAuth } from '../../authContext/authContext';
 import { toast } from '../../hooks/use-toast'
 
@@ -87,11 +88,19 @@ export default function LoginDialog () {
     }
   }
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+    <div>
+    <Button onClick={() => setIsOpen(true)} variant={`${isDark?"default":"outline"}`}>Login</Button>
+    <Dialog open={isOpen}  modal={true}>
+      {/* <DialogTrigger asChild>
         <Button variant={`${isDark?"default":"outline"}`}>Login</Button>
-      </DialogTrigger>
+      </DialogTrigger> */}
+
       <DialogContent className={`sm:max-w-[425px] ${isDark?"bg-gray-800 text-white":"bg-white"}`}>
+        <DialogClose asChild>
+        <button onClick={() => setIsOpen(false)} className="absolute right-2 top-2">
+              <X className="h-6 w-6 hover:bg-red-500 hover:text-white transition-all" />
+          </button>
+        </DialogClose>
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-center">Welcome Back</DialogTitle>
           <DialogDescription className="text-center">
@@ -162,5 +171,6 @@ export default function LoginDialog () {
         </div>
       </DialogContent>
     </Dialog>
+    </div>
   )
 }
