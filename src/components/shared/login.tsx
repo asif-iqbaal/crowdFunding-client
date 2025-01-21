@@ -14,11 +14,14 @@ import { Login } from '../../constant'
 import { X } from "lucide-react"
 import { useAuth } from '../../authContext/authContext';
 import { toast } from '../../hooks/use-toast'
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginDialog () {
   const [isOpen, setIsOpen] = useState(false)
+  const [loading,setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
   const {login,isDark} = useAuth();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -27,6 +30,10 @@ export default function LoginDialog () {
       password: "",
     },
   })
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get('token');
@@ -41,7 +48,7 @@ export default function LoginDialog () {
   const onSubmit = async(data: LoginFormValues) => {
     try {
       let user: Login;
-      
+      setLoading(true);
       user = await LoginUser({
           email:data.email,
           password:data.password
@@ -50,9 +57,20 @@ export default function LoginDialog () {
       if (user) {
           login();
           setIsOpen(false);
+          setLoading(false);
       }
-  } catch (error) {
-      console.error("Login failed:", error);
+      toast({
+        title:"Loged In",
+        description:"Login Success"
+      })
+  } catch (error:any) {
+    setLoading(false);
+      toast({
+        title:"Login failed",
+        description:"Failed to login",
+        variant:"destructive"
+      })
+      
   }
   }
 
@@ -134,13 +152,26 @@ export default function LoginDialog () {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your password"
+                        {...field}
+                      />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
+                      >
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      </button>
+                    </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full  bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">Login</Button>
+              <Button type="submit" className="w-full  bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">{loading?"Loging":"Login"}</Button>
             </form>
           </Form>
           <div className="mt-4 text-sm text-center">

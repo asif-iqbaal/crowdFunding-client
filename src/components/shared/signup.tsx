@@ -14,11 +14,14 @@ import { authWithGithub, authWithGoogle, CreateUser } from '../../action/auth'
 import { useAuth } from '../../authContext/authContext'
 import { X } from "lucide-react"
 import { toast } from '../../hooks/use-toast'
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 type SignupFormValues = z.infer<typeof signupSchema>
 
 export default function SignupDialog() {
   const [isOpen, setIsOpen] = useState(false)
+  const [loading,setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
   const {login,isDark} = useAuth();
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -29,6 +32,10 @@ export default function SignupDialog() {
       confirmPassword: "",
     },
   })
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get('token');
@@ -41,6 +48,8 @@ export default function SignupDialog() {
 }, []);
 
   const onSubmit = async(data: SignupFormValues) => {
+   try {
+    setLoading(true);
     let user:Signup;
     user = await CreateUser({
       username:data.username,
@@ -51,7 +60,20 @@ export default function SignupDialog() {
     if(user){
       login();
       setIsOpen(false);
+      setLoading(false);
     }
+    toast({
+      title:"Signed Up",
+      description:"Account created successfully"
+    })
+   } catch (error:any) {
+    toast({
+      title:"Signup failed",
+      description:error,
+      variant:"destructive"
+    })
+    setLoading(false);
+   }
   }
 
   const handleAuthGoogle = async() => {
@@ -158,13 +180,26 @@ export default function SignupDialog() {
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Confirm your password" {...field} />
+                     <div className="relative">
+                     <Input
+                     type={showPassword ? "text" : "password"}
+                     placeholder="Enter your password"
+                     {...field}
+                      />
+                     <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500"
+                 >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                     </button>
+                   </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full  bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">Sign Up</Button>
+              <Button type="submit" className="w-full  bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold rounded-lg">{loading?"Signup...":"Sign Up"}</Button>
             </form>
           </Form>
         </motion.div>

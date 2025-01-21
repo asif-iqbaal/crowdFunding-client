@@ -56,7 +56,7 @@ if (loading) {
 }
 
   return (
-    <div className={`min-h-screen ${isDark?"bg-gray-900 text-white":"bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8`}>
+    <div className={`min-h-screen ${isDark?"bg-gray-900 text-white":"bg-gradient-to-b from-purple-50 to-white"} py-12 px-4 sm:px-6 lg:px-8 overflow-hidden`}>
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -139,7 +139,7 @@ if (loading) {
               transition={{ duration: 0.5 }}
               className="text-center mt-12"
             >
-              <p className="text-xl text-gray-600">No campaigns found. Try adjusting your search or filters.</p>
+              <div className="text-xl  text-gray-600 w-screen h-[50vh]">No campaigns found. Try adjusting your search or filters.</div>
             </motion.div>
           )}
         </motion.div>
