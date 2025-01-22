@@ -109,7 +109,7 @@ export default function SignupDialog() {
   }
   return (
     <div>
-      <Button onClick={() => setIsOpen(true)} >Sign Up</Button>
+      <p onClick={() => setIsOpen(true)} >Sign Up</p>
     <Dialog open={isOpen} modal={true}>
       {/* <DialogTrigger asChild>
         <Button>Sign Up</Button>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Button } from "../../components/ui/button"
-import { Menu, User, X } from 'lucide-react'
+import { ArrowRight, Menu, User, X ,Sun, Moon} from 'lucide-react'
 import { Link } from 'react-router-dom'
 import LoginDialog from './login'
 import SignupDialog from './signup'
@@ -64,8 +64,8 @@ export default function Navigation() {
                         <Link to="/about" className="text-gray-600 hover:text-purple-600 transition-colors">About Us</Link>
                     </div>
                     <div className="hidden md:flex space-x-2">
-                        <div>
-                           {isDark?<Button className='bg-white text-black rounded-2xl hover:bg-gray-700' onClick={Light}>Light</Button> : <Button className='bg-gray-950 text-white rounded-2xl hover:bg-gray-700' onClick={Dark}>Dark</Button>}
+                        <div className='flex justify-center items-center cursor-pointer'>
+                           {isDark?<Sun className='bg-black text-white rounded-2xl hover:bg-gray-700' onClick={Light}/> : <Moon className=' text-black rounded-2xl hover:bg-gray-100' onClick={Dark}/>}
                         </div>
                         {isAuthenticated ? (
                             <DropdownMenu>
@@ -93,10 +93,13 @@ export default function Navigation() {
                             <>
                               <div className="hidden md:flex space-x-2">
                         <Button className={`${isDark?"bg-gray-500":"bg-transparent"}`}><LoginDialog /></Button>
-                        <Button className="bg-gradient-to-r from-purple-600 to-blue-500 text-white"><SignupDialog /></Button>
                         </div>
                             </>
                         )}
+                         <Link to="/start-project"><Button size="default" className="w-full sm:w-auto rounded-xl bg-blue-500 text-white hover:bg-blue-400">
+                            Start a Project <ArrowRight className="ml-2 h-4 w-4" />
+                            </Button>
+                        </Link> 
                     </div>   
                     <button 
                         className="md:hidden" 

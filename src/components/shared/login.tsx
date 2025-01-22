@@ -15,6 +15,7 @@ import { X } from "lucide-react"
 import { useAuth } from '../../authContext/authContext';
 import { toast } from '../../hooks/use-toast'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import SignupDialog from './signup'
 
 type LoginFormValues = z.infer<typeof loginSchema>
 
@@ -189,6 +190,7 @@ export default function LoginDialog () {
               </span>
             </div>
           </div>
+          <div className='flex justify-evenly'><p>create a new account</p><button className='text-blue-500'><SignupDialog /></button></div>
           <div className="mt-4 flex gap-2">
             <Button variant="outline" className="w-full" onClick={handleAuthGoogle}>
              <FaGoogle />
