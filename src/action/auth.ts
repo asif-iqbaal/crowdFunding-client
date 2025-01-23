@@ -61,3 +61,24 @@ export const LoginUser = async function ({
     }
     }
 }
+export const verifyUser = async function (email:string){
+try {
+    const res = await axiosClient.post('/sendverificationmail',{email});
+
+    return res.data;
+
+} catch (error:any) {
+    console.error('Error initiating Google Auth:', error);
+    throw error;
+}
+}
+
+export const verify = async function(token:string){
+    try {
+        const res = await axiosClient.get(`/verifymail?token=${token}`);
+        return res.data;
+    } catch (error:any) {
+        console.error('Error initiating Google Auth:', error);
+        throw error;
+    }
+}

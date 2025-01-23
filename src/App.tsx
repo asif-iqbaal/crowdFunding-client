@@ -1,4 +1,4 @@
-import { BrowserRouter as Router , Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router , Routes, Route} from "react-router-dom"
 import Home from "./pages/Home/home"
 import Navigation from "./components/shared/navigation"
 import About from "./pages/about/about"
@@ -11,13 +11,15 @@ import ProfilePage from "./pages/profile/profile"
 import AdminDashboard from "./pages/Admin/admin-dashboard"
 import { useAuth } from "./authContext/authContext"
 import NotFound from "./components/shared/pageNotFound"
+import VerifyPage from "./components/shared/verification"
 
 function App() {
     const {role} = useAuth();
+    const isVerificationPage = window.location.pathname === "/verify";
   return (
    <Router>
     <ScrollToTop />
-    <Navigation />
+     {!isVerificationPage && <Navigation />}
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path='/about' element={<About />} />
@@ -30,6 +32,7 @@ function App() {
           <Route path="campaign/:_id" element={<ViewCampaignPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
+        <Route path="/verify" element={<VerifyPage />} />
     </Routes>
     <Toaster />
    </Router>

@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { FaGoogle,FaGithub } from 'react-icons/fa';
 import { signupSchema } from '../../validations'
 import { Signup } from '../../constant'
-import { authWithGithub, authWithGoogle, CreateUser } from '../../action/auth'
+import { authWithGithub, authWithGoogle, CreateUser, verifyUser } from '../../action/auth'
 import { useAuth } from '../../authContext/authContext'
 import { X } from "lucide-react"
 import { toast } from '../../hooks/use-toast'
@@ -62,6 +62,8 @@ export default function SignupDialog() {
       setIsOpen(false);
       setLoading(false);
     }
+    const email = data.email;
+    await verifyUser(email);
     toast({
       title:"Signed Up",
       description:"Account created successfully"
