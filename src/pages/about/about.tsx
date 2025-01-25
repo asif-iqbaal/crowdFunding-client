@@ -32,7 +32,7 @@ export default function About() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              About CrowdFund
+              About GrowFund
             </motion.h1>
             <motion.p 
               className="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto"
@@ -72,7 +72,7 @@ export default function About() {
               <motion.div variants={fadeInUp}>
                 <h3 className={`text-2xl font-semibold mb-4 ${isDark? "text-white" :"text-black"}`}>From Idea to Impact</h3>
                 <p className="text-gray-600 mb-4">
-                  CrowdFund was born from a simple idea: what if we could create a platform that connects innovative ideas with the people who want to support them? Since our launch in 2015, we've helped thousands of creators bring their projects to life.
+                  Grow Fund was born from a simple idea: what if we could create a platform that connects innovative ideas with the people who want to support them? Since our launch in 2025, we've helped thousands of creators bring their projects to life.
                 </p>
                 <p className="text-gray-600">
                   Our journey has been one of continuous growth and learning. We've celebrated successes, learned from challenges, and always kept our focus on our community of creators and backers.
@@ -182,7 +182,7 @@ export default function About() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} CrowdFund. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} GrowFund. All rights reserved.</p>
           </div>
         </div>
       </footer>
