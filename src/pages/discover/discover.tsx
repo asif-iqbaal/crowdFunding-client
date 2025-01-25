@@ -38,6 +38,7 @@ export default function DiscoverPage() {
         try {
             const campaign = await All_Campaigns();
             setCampaigns(campaign);
+            console.log(campaign);
         } catch (error:any) {
             console.log("error",error);
         }finally{

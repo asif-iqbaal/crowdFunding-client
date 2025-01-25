@@ -54,8 +54,9 @@ export default function Navigation() {
                 style={{ backgroundColor }}
             >
                 <nav className="container mx-auto px-4 py-4 flex justify-between items-center ">
-                    <Link to="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
-                        riseTogether
+                    <Link to="/" className="text-2xl flex font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">
+                        <img className='h-10 w-10 rounded-full' src="/logo.png" alt="logo" />
+                        Grow Fund
                     </Link>
                     <div className="hidden md:flex space-x-6">
                         <Link to="/" className="text-gray-600 hover:text-purple-600 transition-colors">Home</Link>

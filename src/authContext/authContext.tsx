@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-//import Cookies from 'js-cookie';
-// Define the type for the authentication context state
+
 interface AuthContextType {
   isAuthenticated: boolean;
   login: () => void;
