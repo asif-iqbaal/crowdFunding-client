@@ -206,8 +206,8 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 { name: "Md Shami", role: "Project Creator", quote: "CrowdFund helped me turn my passion into a successful business. The support from the community was overwhelming!", avatar: "/placeholder.svg?height=100&width=100" },
-                { name: "Sarah Lee", role: "Backer", quote: "I love discovering and supporting innovative projects. CrowdFund makes it easy and exciting to be part of something new.", avatar: "/placeholder.svg?height=100&width=100" },
-                { name: "Mike Brown", role: "Entrepreneur", quote: "As a repeat creator, I can say that CrowdFund provides the best platform for bringing ideas to life. It's simply unmatched.", avatar: "/placeholder.svg?height=100&width=100" }
+                { name: "Anand Roy", role: "", quote: "I love discovering and supporting innovative projects. CrowdFund makes it easy and exciting to be part of something new.", avatar: "/placeholder.svg?height=100&width=100" },
+                { name: "Abhinav Singh", role: "", quote: "As a repeat creator, I can say that CrowdFund provides the best platform for bringing ideas to life. It's simply unmatched.", avatar: "/placeholder.svg?height=100&width=100" }
               ].map((testimonial, index) => (
                 <motion.div 
                   key={index}
